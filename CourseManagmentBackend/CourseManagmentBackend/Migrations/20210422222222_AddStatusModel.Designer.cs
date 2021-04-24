@@ -4,14 +4,16 @@ using CourseManagmentBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseManagmentBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210422222222_AddStatusModel")]
+    partial class AddStatusModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +61,8 @@ namespace CourseManagmentBackend.Migrations
                     b.Property<string>("BrojIndeksa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("GodinaYearId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Godina")
+                        .HasColumnType("int");
 
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
@@ -73,26 +75,9 @@ namespace CourseManagmentBackend.Migrations
 
                     b.HasKey("PkStudentID");
 
-                    b.HasIndex("GodinaYearId");
-
                     b.HasIndex("StatusId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("CourseManagmentBackend.Models.Year", b =>
-                {
-                    b.Property<long>("YearId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Naziv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("YearId");
-
-                    b.ToTable("Year");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -112,15 +97,9 @@ namespace CourseManagmentBackend.Migrations
 
             modelBuilder.Entity("CourseManagmentBackend.Models.Student", b =>
                 {
-                    b.HasOne("CourseManagmentBackend.Models.Year", "Godina")
-                        .WithMany()
-                        .HasForeignKey("GodinaYearId");
-
                     b.HasOne("CourseManagmentBackend.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId");
-
-                    b.Navigation("Godina");
 
                     b.Navigation("Status");
                 });
