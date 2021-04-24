@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CourseManagmentBackend.Models;
 using CourseManagmentBackend.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,49 +12,50 @@ namespace CourseManagmentBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class CourseController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public StudentController(ApplicationDbContext context,IMapper mapper)
+
+        public CourseController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] StudentViewModel model)
+        public async Task<IActionResult> Create([FromBody] CourseViewModel model)
         {
-            var student = _mapper.Map<Student>(model);
-            _context.Students.Add(student);
+            var course = _mapper.Map<Course>(model);
+            _context.Courses.Add(course);
             await _context.SaveChangesAsync();
-;           return Ok();
+            return Ok();
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var students = _context.Students;
-            return Ok(new { students = _mapper.Map<List<StudentViewModel>>(students)});
+            var courses = _context.Courses;
+            return Ok(new { courses = _mapper.Map<List<CourseViewModel>>(courses) });
 
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] StudentViewModel model)
+        public async Task<IActionResult> Update([FromBody] CourseViewModel model)
         {
-            var student = _mapper.Map<Student>(model);
-            _context.Students.Update(student);
+            var course = _mapper.Map<Course>(model);
+            _context.Courses.Update(course);
             await _context.SaveChangesAsync();
             return Ok();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var student = _context.Students.FirstOrDefault(s => s.PkStudentID == id);
-            if (student != null)
+            var course = _context.Courses.FirstOrDefault(s => s.PkCourseId == id);
+            if (course != null)
             {
-                _context.Students.Remove(student);
+                _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
             }
 
-            return Ok(student);
+            return Ok(course);
         }
     }
 }
