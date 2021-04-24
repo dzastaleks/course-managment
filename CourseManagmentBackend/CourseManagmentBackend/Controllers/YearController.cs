@@ -12,50 +12,49 @@ namespace CourseManagmentBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class YearController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-
-        public CourseController(ApplicationDbContext context, IMapper mapper)
+        public YearController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CourseViewModel model)
+        public async Task<IActionResult> Create([FromBody] YearViewModel model)
         {
-            var course = _mapper.Map<Course>(model);
-            _context.Courses.Add(course);
+            var year = _mapper.Map<Year>(model);
+            _context.Year.Add(year);
             await _context.SaveChangesAsync();
             return Ok();
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var courses = _context.Courses;
-            return Ok(new { courses = _mapper.Map<List<CourseViewModel>>(courses) });
+            var years = _context.Year;
+            return Ok(new { years = _mapper.Map<List<YearViewModel>>(years) });
 
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CourseViewModel model)
+        public async Task<IActionResult> Update([FromBody] YearViewModel model)
         {
-            var course = _mapper.Map<Course>(model);
-            _context.Courses.Update(course);
+            var year = _mapper.Map<Year>(model);
+            _context.Year.Update(year);
             await _context.SaveChangesAsync();
             return Ok();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var course = _context.Courses.FirstOrDefault(c => c.PkCourseId == id);
-            if (course != null)
+            var year = _context.Year.FirstOrDefault(y => y.YearId == id);
+            if (year != null)
             {
-                _context.Courses.Remove(course);
+                _context.Year.Remove(year);
                 await _context.SaveChangesAsync();
             }
 
-            return Ok(course);
+            return Ok(year);
         }
     }
 }
