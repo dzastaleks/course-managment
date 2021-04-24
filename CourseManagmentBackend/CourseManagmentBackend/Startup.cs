@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CourseManagmentBackend.Mapper;
 
 namespace CourseManagmentBackend
 {
@@ -30,6 +32,7 @@ namespace CourseManagmentBackend
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(typeof(CourseMappings));
             services.AddControllers();
         }
 
