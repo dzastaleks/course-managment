@@ -10,6 +10,7 @@ namespace CourseManagmentBackend.Models
     {
         [Key]
         public long PkCourseId { get; set; }
+        [Required]
         public string NazivKursa { get; set; }
         public List<Student> Studenti { get; set; }
 
