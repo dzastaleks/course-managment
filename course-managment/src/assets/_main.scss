@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+*{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;    
+}
+html, body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  #app {
+      font-family: 'Roboto', sans-serif;
+    }
+    
+body{
+        background: #E5E5E5!important;
+        font-family: 'Roboto', sans-serif!important;
+}
+.input-group {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	margin-bottom: 21px;
+	position: relative;
+	label {
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: 300;
+		font-size: 14px;
+		line-height: 18px;
+		letter-spacing: 0.02em;
+		color: #6b6b6b;
+		margin-bottom: 6px;
+	}
+	input {
+		height: 55px;
+		background: #f8f8f8;
+		border: none;
+		padding: 17px !important;
+		outline: none;
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 21px;
+		letter-spacing: 0.02em;
+        border-radius: 6px;
+
+		color: #6b6b6b !important;
+	}
+	::-webkit-input-placeholder {
+		/* WebKit, Blink, Edge */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+	}
+	:-moz-placeholder {
+		/* Mozilla Firefox 4 to 18 */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+		opacity: 1;
+	}
+	::-moz-placeholder {
+		/* Mozilla Firefox 19+ */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+		opacity: 1;
+	}
+	:-ms-input-placeholder {
+		/* Internet Explorer 10-11 */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+	}
+	::-ms-input-placeholder {
+		/* Microsoft Edge */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+	}
+	::placeholder {
+		/* Most modern browsers support this now. */
+		font-family: "Roboto" !important;
+		font-style: italic !important;
+		font-weight: normal !important;
+		font-size: 16px !important;
+		line-height: 21px !important;
+		letter-spacing: 0.02em !important;
+		color: #6b6b6b !important;
+	}
+}

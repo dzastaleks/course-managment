@@ -40,7 +40,7 @@ namespace CourseManagmentBackend.Controllers
         public async Task<IActionResult> Get(long id)
         {
             var student = _context.Students.FromSqlRaw<Student>("spGetStudentById {0}", id).ToList().FirstOrDefault();
-            return Ok(new { student = _mapper.Map<StudentStoreViewModel>(student) });
+            return Ok(new { student = _mapper.Map<StudentViewModel>(student) });
 
         }
         [HttpPut]   
