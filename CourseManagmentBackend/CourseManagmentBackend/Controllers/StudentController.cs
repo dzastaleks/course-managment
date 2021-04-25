@@ -36,7 +36,14 @@ namespace CourseManagmentBackend.Controllers
             return Ok(new { students = _mapper.Map<List<StudentViewModel>>(students)});
 
         }
-        [HttpPut]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(long id)
+        {
+            var student = _context.Students.FromSqlRaw<Student>("spGetStudentById {0}", id).ToList().FirstOrDefault();
+            return Ok(new { student = _mapper.Map<StudentStoreViewModel>(student) });
+
+        }
+        [HttpPut]   
         public async Task<IActionResult> Update([FromBody] StudentViewModel model)
         {
             var student = _mapper.Map<Student>(model);
