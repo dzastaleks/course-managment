@@ -1,7 +1,11 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <img class="logo-img" src="../../assets/img/logo.png" alt="" />
+      <img
+        class="logo-img"
+        :src="require(`../../assets/img/logo.png`)"
+        alt=""
+      />
     </div>
     <div class="form-card">
       <h1>Login</h1>
@@ -78,7 +82,7 @@ export default {
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     border: none !important;
     width: 610px;
-    padding-bottom: 43px;
+    padding-bottom: 70px;
     h1 {
       font-family: "Roboto";
       font-style: normal;

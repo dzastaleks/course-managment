@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Login from "../views/Login/Login";
+import Login from "../views/login/Login";
+import dashboardRouter from "@/views/dashboard/router";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  ...dashboardRouter
 ];
 
 const router = new VueRouter({
