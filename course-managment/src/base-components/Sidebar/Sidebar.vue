@@ -8,20 +8,66 @@
       />
     </div>
     <ul class="menu">
-      <li class="menu-item">
-        <span> <i class="icon-solid-chart-line icon"></i></span>
+      <li
+        class="menu-item"
+        :class="activeForComponent('DashboardIndex')"
+        @click="redirectToComponent('DashboardIndex')"
+      >
+        <span>
+          <i
+            class="icon-solid-chart-line icon"
+            :class="activeForComponent('DashboardIndex')"
+          ></i
+        ></span>
         <span>Dashboard</span>
       </li>
-      <li class="menu-item">
-        <span> <i class="icon-solid-layer-group icon"></i></span>
+      <li
+        class="menu-item"
+        :class="activeForComponent('Course')"
+        @click="redirectToComponent('Course')"
+      >
+        <span>
+          <i
+            class="icon-solid-layer-group icon"
+            :class="activeForComponent('Course')"
+          ></i
+        ></span>
         <span>Kursevi</span>
       </li>
-      <li class="menu-item">
-        <span><i class="icon-solid-graduation-cap icon"></i></span>
+      <li
+        class="menu-item"
+        :class="activeForComponent('Student')"
+        @click="redirectToComponent('Student')"
+      >
+        <span
+          ><i
+            class="icon-solid-graduation-cap icon"
+            :class="activeForComponent('Student')"
+          ></i
+        ></span>
         <span>Studenti</span>
       </li>
-      <li class="menu-item">
-        <span><i class="icon-solid-bars icon"></i></span> <span>Godina</span>
+      <li
+        class="menu-item"
+        :class="activeForComponent('Year')"
+        @click="redirectToComponent('Year')"
+      >
+        <span
+          ><i
+            class="icon-solid-bars icon"
+            :class="activeForComponent('Year')"
+          ></i
+        ></span>
+        <span>Godina</span>
+      </li>
+      <li class="menu-item" :class="activeForComponent('')">
+        <span
+          ><i
+            class="icon-solid-sign-out-alt icon"
+            :class="activeForComponent('')"
+          ></i
+        ></span>
+        <span>Logout</span>
       </li>
     </ul>
     <div class="footer">
@@ -38,6 +84,20 @@ export default {
       type: Object,
       default: null
     }
+  },
+  methods: {
+    redirectToComponent(component) {
+      if (this.$route.name == component) return;
+      this.$router.push({ name: component });
+    },
+    activeForComponent(component) {
+      if (this.$route.name == component) {
+        return "active";
+      } else return "";
+    }
+  },
+  mounted() {
+    console.log(this.$route.name);
   }
 };
 </script>
@@ -99,6 +159,7 @@ export default {
       line-height: 40px;
       text-align: left;
       padding-left: 24px;
+      cursor: pointer;
       i {
         color: #1890ff;
         margin-right: 15px;
@@ -114,6 +175,13 @@ export default {
         line-height: 22px !important;
         color: rgba(0, 0, 0, 0.85);
       }
+    }
+    .active {
+      background: #1890ff;
+      color: #fff;
+    }
+    i.active {
+      color: #fff;
     }
   }
 
