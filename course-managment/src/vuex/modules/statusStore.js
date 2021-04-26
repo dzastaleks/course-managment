@@ -1,26 +1,14 @@
 import globalStore from "../../store/index";
 
-const student = {
+const status = {
     namespaced: true,
     state: {
     },
     actions: {
-        CREATE: function({state},model) {
-            return new Promise((resolve, reject) => {
-              globalStore.state.$axios
-                .post("/api/student/", model)
-                .then(function(response) {
-                  resolve(response);
-                })
-                .catch(function(error) {
-                  reject(error.response);
-                });
-            });
-          },
         GET_ALL: function () {
             return new Promise((resolve, reject) => {
                 globalStore.state.$axios
-                    .get("/api/student/")
+                    .get("/api/status/")
                     .then(function (response) {
                         resolve(response);
                     })
@@ -33,4 +21,4 @@ const student = {
     mutations: {
     }
 };
-export default student;
+export default status;

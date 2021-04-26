@@ -7,22 +7,34 @@
         <div class="form-items">
           <div class="input-group">
             <label for="ime">Ime: </label>
-            <input type="text" placeholder="Unesite Ime studenta" />
+            <input
+              type="text"
+              placeholder="Unesite Ime studenta"
+              v-model="model.ime"
+            />
           </div>
           <div class="input-group">
             <label for="prezime">Prezime: </label>
-            <input type="text" placeholder="Unesite Prezime studenta" />
+            <input
+              type="text"
+              placeholder="Unesite Prezime studenta"
+              v-model="model.prezime"
+            />
           </div>
           <div class="input-group">
             <label for="brojIndeksa">Broj Indeksa: </label>
-            <input type="text" placeholder="Unesite Broj indeksa studenta" />
+            <input
+              type="text"
+              placeholder="Unesite Broj indeksa studenta"
+              v-model="model.brojIndeksa"
+            />
           </div>
           <div class="input-group">
             <label for="Status">Status:</label>
             <dropdown
               :options="statusDropdownOptions"
               :default="statusDropdownDefault"
-              @input="handleDropdown"
+              @input="handleDropdownStatus"
               :tabindex="1"
             ></dropdown>
           </div>
@@ -31,12 +43,12 @@
             <dropdown
               :options="godinaDropdownOptions"
               :default="godinaDropdownDefault"
-              @input="handleDropdown"
+              @input="handleDropdownYear"
               :tabindex="1"
             ></dropdown>
           </div>
           <div>
-            <btn :styleBtn="'primary'" :title="'Sačuvaj'"></btn>
+            <btn :styleBtn="'primary'" :title="'Sačuvaj'" @click="save()"></btn>
           </div>
         </div>
       </div>
@@ -45,28 +57,80 @@
 </template>
 
 <script>
+import store from "@/store/index";
+
 export default {
   components: {},
   methods: {
-    handleDropdown(value) {
-      console.log("dropdown", value);
+    handleDropdownStatus(value) {
+      this.model.status = value;
+    },
+    handleDropdownYear(value) {
+      this.model.year = value;
+    },
+    save() {
+      console.log(this.model);
+      store
+        .dispatch("student/CREATE", this.model)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getAllYears() {
+      store
+        .dispatch("year/GET_ALL")
+        .then((response) => {
+          this.godinaDropdownOptions = [];
+          response.data.years.forEach((element) => {
+            this.godinaDropdownOptions.push({
+              id: element.yearId,
+              name: element.naziv
+            });
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getStatus() {
+      store
+        .dispatch("status/GET_ALL")
+        .then((response) => {
+          this.statusDropdownOptions = [];
+          response.data.status.forEach((element) => {
+            this.statusDropdownOptions.push({
+              id: element.statusId,
+              name: element.naziv
+            });
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   },
   data() {
     return {
-      statusDropdownOptions: [
-        { id: 1, name: "Redovni" },
-        { id: 2, name: "Vanredni" }
-      ],
+      model: {
+        ime: "",
+        prezime: "",
+        brojIndeksa: "",
+        year: 0,
+        status: 0,
+        kursevi: []
+      },
+      statusDropdownOptions: [],
       statusDropdownDefault: { id: 0, name: "Izaberi" },
-      godinaDropdownOptions: [
-        { id: 1, name: "Prva" },
-        { id: 2, name: "Druga" },
-        { id: 3, name: "Treca" },
-        { id: 4, name: "Cetvrta" }
-      ],
+      godinaDropdownOptions: [],
       godinaDropdownDefault: { id: 0, name: "Izaberi" }
     };
+  },
+  created() {
+    this.getAllYears();
+    this.getStatus();
   }
 };
 </script>
