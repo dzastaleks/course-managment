@@ -5,7 +5,7 @@ const year = {
     state: {
     },
     actions: {
-        CREATE: function( model) {
+        CREATE: function({state},model) {
             return new Promise((resolve, reject) => {
               globalStore.state.$axios
                 .post("/api/year/", model)
