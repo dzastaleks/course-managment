@@ -1,7 +1,15 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboard">
-      <div class="title">Kursevi</div>
+      <div class="header">
+        <div class="title">Kursevi</div>
+        <btn
+          :styleBtn="'primary'"
+          :title="'Dodaj novi kurs'"
+          :icon="'solid-plus'"
+          @click="redirectToComponent('CourseCreate')"
+        ></btn>
+      </div>
       <table class="mytable">
         <thead>
           <tr>
@@ -11,10 +19,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(tr, indextr) in incomes" v-bind:key="indextr">
-            <td>{{ tr.category }}</td>
-            <td class="bold">{{ tr.actual }}</td>
-            <td>34</td>
+          <tr v-for="(tr, indextr) in courses" v-bind:key="indextr">
+            <td>{{ tr.pkCourseId }}</td>
+            <td class="bold">{{ tr.nazivKursa }}</td>
+            <td class="bold">{{ tr.nazivKursa }}</td>
           </tr>
         </tbody>
       </table>
@@ -23,59 +31,33 @@
 </template>
 
 <script>
+import store from "@/store/index";
+
 export default {
   components: {},
-  methods: {},
   data() {
     return {
-      incomes: [
-        {
-          id: 1,
-          category: "Apartment Rent",
-          actual: "$1,000.00",
-          planned: "$1,200.00",
-          difference: "- $200.00",
-          percentage: "37.5%",
-          color: "#0E8DD3"
-        },
-        {
-          id: 2,
-          category: "Premises Rent",
-          actual: "$1,300.00",
-          planned: "$1,500.00",
-          difference: "- $200.00",
-          percentage: "25%",
-          color: "#32A2E0"
-        },
-        {
-          id: 3,
-          category: "Bilboard Rent",
-          actual: "$1,243.60",
-          planned: "$1000.00",
-          difference: "+ $243.60",
-          percentage: "12.5%",
-          color: "#29B2FD"
-        },
-        {
-          id: 4,
-          category: "Loans",
-          actual: "$1,000.00",
-          planned: "$500.00",
-          difference: "- $500.00",
-          percentage: "12.5%",
-          color: "#4CBFFF"
-        },
-        {
-          id: 5,
-          category: "Others",
-          actual: "$200.00",
-          planned: "$100.00 ",
-          difference: "+ $100.00",
-          percentage: "12.5%",
-          color: "#75CEFF"
-        }
-      ]
+      courses: []
     };
+  },
+  methods: {
+    redirectToComponent(component) {
+      if (this.$route.name == component) return;
+      this.$router.push({ name: component });
+    },
+    getAll() {
+      store
+        .dispatch("course/GET_ALL")
+        .then((response) => {
+          this.courses = response.data.courses;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
+  created() {
+    this.getAll();
   }
 };
 </script>
@@ -90,10 +72,15 @@ export default {
   // grid-column-gap: 30px;
   // grid-row-gap: 50px;
   // grid-template-columns: 1fr 1fr 1fr;
-  .title {
-    font-size: 36px;
-    text-align: left;
-    margin-bottom: 30px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      font-size: 36px;
+      text-align: left;
+      margin-bottom: 30px;
+    }
   }
 }
 table.mytable {

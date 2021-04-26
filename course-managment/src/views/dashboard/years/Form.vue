@@ -4,27 +4,55 @@
       <div class="title">Nova Godina</div>
       <div class="form-card">
         <h1>Unesite novu godinu</h1>
-        <div class="form-items">
-          <div class="input-group">
-            <label for="godina">Naziv Godine: </label>
-            <input type="text" placeholder="Unesite Naziv nove godine" />
+        <form @submit.prevent>
+          <div class="form-items">
+            <div class="input-group">
+              <label for="godina">Naziv Godine: </label>
+              <input
+                type="text"
+                name="naziv"
+                placeholder="Unesite Naziv nove godine"
+                v-model="model.naziv"
+              />
+            </div>
+            <div>
+              <btn
+                :styleBtn="'primary'"
+                :title="'Sačuvaj'"
+                @click="submit()"
+              ></btn>
+            </div>
           </div>
-
-          <div>
-            <btn :styleBtn="'primary'" :title="'Sačuvaj'"></btn>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import store from "@/store/index";
+
 export default {
   components: {},
-  methods: {},
+  methods: {
+    submit() {
+      console.log(this.model);
+      store
+        .dispatch("year/CREATE", this.model)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
   data() {
-    return {};
+    return {
+      model: {
+        naziv: ""
+      }
+    };
   }
 };
 </script>

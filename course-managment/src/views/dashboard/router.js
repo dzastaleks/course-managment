@@ -34,7 +34,12 @@ const router = [
                 path:"create",
                 name:"CourseCreate",
                 component:CourseForm
-            }
+            },
+            {
+                path:"edit/:pkCourseId",
+                name:"CourseEdit",
+                component:CourseForm
+            },
         ]
       },
       {
@@ -50,6 +55,11 @@ const router = [
         {
             path:"create",
             name:"StudentCreate",
+            component:StudentForm
+        },
+        {
+            path:"edit/:pkStudentID",
+            name:"StudentEdit",
             component:StudentForm
         }]
       },
@@ -67,6 +77,11 @@ const router = [
             {
                 path:"create",
                 name:"YearCreate",
+                component:YearForm
+            },
+            {
+                path:"edit/:yearId",
+                name:"YearEdit",
                 component:YearForm
             }
         ]

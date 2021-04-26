@@ -1,11 +1,10 @@
-import globalStore from "../../store/index";
+// import globalStore from "../../store/index";
 
 const login = {
     namespaced: true,
     state: {
     },
     actions: {
-        
     },
     mutations: {
     }

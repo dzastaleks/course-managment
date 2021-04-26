@@ -3,6 +3,10 @@
     <router-view />
   </div>
 </template>
+<script>
+// import store from "./store/index";
+// import { mapState } from "vuex";
+</script>
 
 <style lang="scss">
 @import "./assets/main";
