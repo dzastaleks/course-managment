@@ -36,15 +36,35 @@ export default {
   components: {},
   methods: {
     submit() {
-      console.log(this.model);
+      if (this.$route.params.yearId == null) {
+        store
+          .dispatch("year/CREATE", this.model)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        store
+          .dispatch("year/EDIT", this.model)
+          .then((response) => {
+            console.log(this.model);
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    getById() {
       store
-        .dispatch("year/CREATE", this.model)
+        .dispatch("year/GET_BY_ID", this.$route.params.yearId)
         .then((response) => {
-          console.log(response);
+          this.model = response.data.year;
+          console.log(response.data);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
   },
   data() {
@@ -53,6 +73,9 @@ export default {
         naziv: ""
       }
     };
+  },
+  created() {
+    if (this.$route.params.yearId) this.getById();
   }
 };
 </script>

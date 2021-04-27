@@ -72,7 +72,11 @@ export default {
   mounted() {
     this.$emit("input", this.selected.id);
   },
-  watch: {}
+  watch: {
+    default: function (newValue) {
+      this.selected = this.default;
+    }
+  }
 };
 </script>
 

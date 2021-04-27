@@ -6,12 +6,20 @@
         <h1>Kreirajte novi kurs</h1>
         <div class="form-items">
           <div class="input-group">
-            <label for="username">Naziv Kursa: </label>
-            <input type="text" placeholder="Unesite Naziv novog kursa" />
+            <label for="naziv">Naziv Kursa: </label>
+            <input
+              type="text"
+              placeholder="Unesite Naziv novog kursa"
+              v-model="model.nazivKursa"
+            />
           </div>
 
           <div>
-            <btn :styleBtn="'primary'" :title="'Sačuvaj'"></btn>
+            <btn
+              :styleBtn="'primary'"
+              :title="'Sačuvaj'"
+              @click="submit()"
+            ></btn>
           </div>
         </div>
       </div>
@@ -20,11 +28,51 @@
 </template>
 
 <script>
+import store from "@/store/index";
+
 export default {
   components: {},
-  methods: {},
+  methods: {
+    submit() {
+      if (this.$route.params.pkCourseId == null) {
+        store
+          .dispatch("course/CREATE", this.model)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        store
+          .dispatch("course/EDIT", this.model)
+          .then((response) => {
+            console.log(this.model);
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    getById() {
+      store
+        .dispatch("course/GET_BY_ID", this.$route.params.pkCourseId)
+        .then((response) => {
+          this.model = response.data.course;
+        })
+        .catch((error) => {});
+    }
+  },
   data() {
-    return {};
+    return {
+      model: {
+        nazivKursa: ""
+      }
+    };
+  },
+  created() {
+    if (this.$route.params.pkCourseId) this.getById();
   }
 };
 </script>

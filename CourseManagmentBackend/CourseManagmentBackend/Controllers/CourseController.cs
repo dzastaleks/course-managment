@@ -3,6 +3,7 @@ using CourseManagmentBackend.Models;
 using CourseManagmentBackend.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace CourseManagmentBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CourseViewModel model)
         {
+            if(_context.Courses.Any(c=>c.NazivKursa == model.NazivKursa))
+                return BadRequest(new { message = "Naziv kursa je već u upotrebi" });
+
             var course = _mapper.Map<Course>(model);
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
@@ -37,9 +41,19 @@ namespace CourseManagmentBackend.Controllers
             return Ok(new { courses = _mapper.Map<List<CourseViewModel>>(courses) });
 
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(long id)
+        {
+            var course = _context.Courses.SingleOrDefault(c => c.PkCourseId == id);
+            return Ok( new { course = _mapper.Map<CourseViewModel>(course) });
+
+        }
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CourseViewModel model)
         {
+            if (_context.Courses.Any(c => c.NazivKursa == model.NazivKursa && c.PkCourseId != model.PkCourseId))
+                return BadRequest(new { message = "Naziv kursa je već u upotrebi" });
+
             var course = _mapper.Map<Course>(model);
             _context.Courses.Update(course);
             await _context.SaveChangesAsync();

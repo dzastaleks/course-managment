@@ -11,8 +11,8 @@ namespace CourseManagmentBackend.Models.ViewModels
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string BrojIndeksa { get; set; }
-        public Year Year { get; set; }
-        public Status Status { get; set; }
+        public long YearId { get; set; }
+        public long StatusId { get; set; }
         public List<Course> Kursevi { get; set; }
     }
 }

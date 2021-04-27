@@ -63,21 +63,32 @@ export default {
   components: {},
   methods: {
     handleDropdownStatus(value) {
-      this.model.status = value;
+      this.model.statusId = value;
     },
     handleDropdownYear(value) {
-      this.model.year = value;
+      this.model.yearId = value;
     },
     save() {
       console.log(this.model);
-      store
-        .dispatch("student/CREATE", this.model)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.$route.params.pkStudentID == null) {
+        store
+          .dispatch("student/CREATE", this.model)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        store
+          .dispatch("student/EDIT", this.model)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     getAllYears() {
       store
@@ -110,18 +121,20 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getById() {
+      store
+        .dispatch("student/GET_BY_ID", this.$route.params.pkStudentID)
+        .then((response) => {
+          this.model = response.data.student;
+          console.log(this.model);
+        })
+        .catch((error) => {});
     }
   },
   data() {
     return {
-      model: {
-        ime: "",
-        prezime: "",
-        brojIndeksa: "",
-        year: 0,
-        status: 0,
-        kursevi: []
-      },
+      model: {},
       statusDropdownOptions: [],
       statusDropdownDefault: { id: 0, name: "Izaberi" },
       godinaDropdownOptions: [],
@@ -129,8 +142,33 @@ export default {
     };
   },
   created() {
+    if (this.$route.params.pkStudentID) this.getById();
     this.getAllYears();
     this.getStatus();
+  },
+  watch: {
+    statusDropdownOptions: function () {
+      let status = this.statusDropdownOptions.find(
+        (obj) => obj.id === this.model.statusId
+      );
+
+      this.statusDropdownDefault = Object.assign(
+        {},
+        this.statusDropdownDefault,
+        status
+      );
+    },
+    godinaDropdownOptions: function () {
+      let godina = this.godinaDropdownOptions.find(
+        (obj) => obj.id === this.model.yearId
+      );
+
+      this.godinaDropdownDefault = Object.assign(
+        {},
+        this.godinaDropdownDefault,
+        godina
+      );
+    }
   }
 };
 </script>

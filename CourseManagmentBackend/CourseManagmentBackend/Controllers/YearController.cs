@@ -24,6 +24,9 @@ namespace CourseManagmentBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] YearViewModel model)
         {
+            if (_context.Year.Any(y => y.Naziv == model.Naziv))
+                return BadRequest(new { message = "Godina sa ovim nazivom već postoji!" });
+
             var year = _mapper.Map<Year>(model);
             _context.Year.Add(year);
             await _context.SaveChangesAsync();
@@ -36,9 +39,19 @@ namespace CourseManagmentBackend.Controllers
             return Ok(new { years = _mapper.Map<List<YearViewModel>>(years) });
 
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var year = _context.Year.SingleOrDefault(y => y.YearId == id);
+            return Ok(new { year = _mapper.Map<YearViewModel>(year) });
+
+        }
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] YearViewModel model)
         {
+            if (_context.Year.Any(y => y.Naziv == model.Naziv && y.YearId != model.YearId))
+                return BadRequest(new { message = "Godina sa ovim nazivom već postoji!" });
+
             var year = _mapper.Map<Year>(model);
             _context.Year.Update(year);
             await _context.SaveChangesAsync();
