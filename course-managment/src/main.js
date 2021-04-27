@@ -22,4 +22,36 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
+  created: function(){
+    var $this = this;
+    store.state.$axios_auth.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        setTimeout(() => {
+          if (error.response && error.response.status == 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            store.state.user = null;
+            store.state.token = null;
+            $this.$router.push({name:"Login"});
+          } else if (error.response && error.response.status == 403) {
+            $this.$router.push({
+              name: "ErrorPage",
+              params: { statusCode: "403" }
+            });
+          } else if (error.response && error.response.status == 404) {
+            $this.$router.push({
+              name: "ErrorPage",
+              params: { statusCode: "404" }
+            });
+          } else if (error.response && error.response.status == 500) {
+            // show("Warning","An error occurred. Contact your system administrator.","warning");
+          }
+        }, 500);
+        return Promise.reject(error);
+      }
+    );
+  }
 }).$mount("#app");

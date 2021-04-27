@@ -7,7 +7,7 @@ const student = {
     actions: {
         CREATE: function({state},model) {
             return new Promise((resolve, reject) => {
-              globalStore.state.$axios
+              globalStore.state.$axios_auth
                 .post("/api/student/", model)
                 .then(function(response) {
                   resolve(response);
@@ -19,7 +19,7 @@ const student = {
           },
         GET_ALL: function () {
             return new Promise((resolve, reject) => {
-                globalStore.state.$axios
+                globalStore.state.$axios_auth
                     .get("/api/student/")
                     .then(function (response) {
                         resolve(response);
@@ -31,7 +31,7 @@ const student = {
         },
         GET_BY_ID: function ({ state }, id) {
           return new Promise((resolve, reject) => {
-              globalStore.state.$axios
+              globalStore.state.$axios_auth
                   .get("api/student/"+ id)
                   .then(function (response) {
                       resolve(response);
@@ -43,7 +43,7 @@ const student = {
       },
       EDIT: function({state},model) {
         return new Promise((resolve, reject) => {
-          globalStore.state.$axios
+          globalStore.state.$axios_auth
             .put("/api/student/", model)
             .then(function(response) {
               resolve(response);

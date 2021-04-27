@@ -28,7 +28,7 @@
           <i class="icon-eye eye-icon" v-on:click="showHidePass"></i>
         </div>
         <div>
-          <btn :styleBtn="'primary'" :title="'Login'"></btn>
+          <btn :styleBtn="'primary'" :title="'Login'" @click="login()"></btn>
         </div>
       </div>
     </div>
@@ -43,6 +43,8 @@
   </div>
 </template>
 <script>
+import store from "@/store/index";
+
 export default {
   data() {
     return {
@@ -60,6 +62,25 @@ export default {
   methods: {
     showHidePass() {
       this.typePassword = this.typePassword == "password" ? "text" : "password";
+    },
+    login() {
+      var $this = this;
+      store
+        .dispatch("login/LOGIN", this.model)
+        .then((response) => {
+          store.commit("SET_TOKEN", "Bearer " + response.data.token);
+          store.commit("SET_USER", JSON.stringify(response.data));
+          if (localStorage.getItem("user")) {
+            var user = JSON.parse(localStorage.getItem("user"));
+            $this.$router.push({ name: "DashboardIndex" });
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          this.message = error.data.message;
+          console.log(error);
+        })
+        .finally(() => {});
     }
   }
 };

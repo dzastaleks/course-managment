@@ -15,6 +15,7 @@ namespace CourseManagmentBackend.Mapper
             CreateMap<Student, StudentViewModel>().ForMember(svm => svm.YearId, m => m.MapFrom(s => s.Year.YearId)).ForMember(svm => svm.StatusId, m => m.MapFrom(s => s.Status.StatusId));
             CreateMap<StudentViewModel, Student>();
             CreateMap<Year, YearViewModel>().ReverseMap();
+            CreateMap<AuthenticateModel, User>();
         }
     }
 }

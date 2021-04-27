@@ -4,8 +4,22 @@
   </div>
 </template>
 <script>
-// import store from "./store/index";
-// import { mapState } from "vuex";
+import store from "./store/index";
+import { mapState } from "vuex";
+export default {
+  created() {
+    // document.title = this.lang("general.app_title");
+    var token = localStorage.getItem("token");
+    if (token != null) {
+      store.commit("SET_TOKEN", token);
+      store.commit(
+        "SET_USER",
+        JSON.stringify(JSON.parse(localStorage.getItem("user")))
+      );
+      // hub(store, notificationToken);
+    }
+  }
+};
 </script>
 
 <style lang="scss">

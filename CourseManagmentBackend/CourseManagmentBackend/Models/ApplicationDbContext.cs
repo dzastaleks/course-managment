@@ -22,6 +22,7 @@ namespace CourseManagmentBackend.Models
         public  DbSet<Course> Courses { get; set; }
         public  DbSet<Year> Year { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<User> Users{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

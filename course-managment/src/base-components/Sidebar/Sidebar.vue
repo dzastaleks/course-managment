@@ -60,7 +60,7 @@
         ></span>
         <span>Godina</span>
       </li>
-      <li class="menu-item" :class="activeForComponent('')">
+      <li class="menu-item" :class="activeForComponent('')" @click="logout()">
         <span
           ><i
             class="icon-solid-sign-out-alt icon"
@@ -78,6 +78,8 @@
 </template>
 
 <script>
+import store from "@/store/index";
+
 export default {
   props: {
     menu: {
@@ -94,6 +96,10 @@ export default {
       if (this.$route.name == component) {
         return "active";
       } else return "";
+    },
+    logout() {
+      store.commit("LOGOUT_USER");
+      this.$router.push({ name: "Login" });
     }
   },
   mounted() {
