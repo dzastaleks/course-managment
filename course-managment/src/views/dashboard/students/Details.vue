@@ -2,52 +2,49 @@
   <div class="dashboard-container">
     <div class="grid-dashboard">
       <div class="header">
-        <div class="title">Kursevi</div>
-        <btn
+        <div class="title">
+          {{ this.model.ime }} {{ this.model.prezime }}
+          <span>{{ this.model.brojIndeksa }}</span>
+        </div>
+        <!-- <btn
           :styleBtn="'primary'"
           :title="'Dodaj novi kurs'"
           :icon="'solid-plus'"
           @click="redirectToComponent('CourseCreate')"
-        ></btn>
+        ></btn> -->
       </div>
-      <table class="mytable">
+      <div class="user-details">
+        <div class="user-details-item" v-if="this.model.ime">
+          <span>Ime</span> {{ this.model.ime }}
+        </div>
+        <div class="user-details-item" v-if="this.model.prezime">
+          <span>Prezime</span>{{ this.model.prezime }}
+        </div>
+        <div class="user-details-item" v-if="this.model.brojIndeksa">
+          <span>Broj Indeksa</span>{{ this.model.brojIndeksa }}
+        </div>
+        <div class="user-details-item" v-if="this.model.status">
+          <span>Status</span>{{ this.model.status.naziv }}
+        </div>
+        <div class="user-details-item" v-if="this.model.year">
+          <span>Godina</span>{{ this.model.year.naziv }}
+        </div>
+      </div>
+      <table class="mytable" v-if="Object.keys(this.kursevi).length > 0">
         <thead>
           <tr>
             <th>ID</th>
             <th>Naziv Kursa</th>
-            <th>Broj Studenata</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(tr, indextr) in courses"
-            v-bind:key="indextr"
-            @mouseover="showActionButtons(indextr)"
-          >
+          <tr v-for="(tr, indextr) in this.kursevi" v-bind:key="indextr">
             <td>{{ tr.pkCourseId }}</td>
             <td class="bold">{{ tr.nazivKursa }}</td>
-            <td class="bold">{{ tr.nazivKursa }}</td>
-            <td>
-              <div class="actions" v-show="buttonsIndex === indextr">
-                <btn
-                  :styleBtn="'primary'"
-                  :title="''"
-                  :icon="'solid-eye'"
-                  style="margin-right: 10px"
-                  @click="detailsClick(tr.pkCourseId)"
-                ></btn>
-                <btn
-                  :styleBtn="'secondary'"
-                  :title="''"
-                  :icon="'solid-pen'"
-                  @click="editClick(tr.pkCourseId)"
-                ></btn>
-              </div>
-            </td>
           </tr>
         </tbody>
       </table>
+      <div class="notify" v-else>Ovaj student nije registrovan na kurseve!</div>
     </div>
   </div>
 </template>
@@ -59,8 +56,8 @@ export default {
   components: {},
   data() {
     return {
-      courses: [],
-      buttonsIndex: 0
+      model: [],
+      kursevi: []
     };
   },
   methods: {
@@ -68,34 +65,26 @@ export default {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
     },
-    getAll() {
+    getById() {
       store
-        .dispatch("course/GET_ALL")
+        .dispatch("student/GET_DETAILS", this.$route.params.pkStudentID)
         .then((response) => {
-          this.courses = response.data.courses;
+          this.model = response.data.student;
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     },
-    detailsClick(id) {
-      this.$router.push({
-        name: "CourseDetails",
-        params: { pkCourseId: id }
-      });
-    },
-    editClick(id) {
-      this.$router.push({
-        name: "CourseEdit",
-        params: { pkCourseId: id }
-      });
-    },
-    showActionButtons(id) {
-      this.buttonsIndex = id;
+    getCourses() {
+      store
+        .dispatch("student/GET_COURSES", this.$route.params.pkStudentID)
+        .then((response) => {
+          this.kursevi = response.data.kursevi;
+        })
+        .catch((error) => {});
     }
   },
   created() {
-    this.getAll();
+    this.getById();
+    this.getCourses();
   }
 };
 </script>
@@ -115,13 +104,34 @@ export default {
     justify-content: space-between;
     align-items: center;
     .title {
+      background: #fff;
+      padding: 20px 40px;
       font-size: 36px;
       text-align: left;
       margin-bottom: 30px;
-      background: #fff;
-      padding: 20px 40px;
       border-radius: 4px;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+      span {
+        font-size: 24px;
+        display: block;
+      }
+    }
+  }
+  .user-details {
+    background: #fff;
+    padding: 40px;
+    margin-bottom: 40px;
+    text-align: left;
+    display: table;
+    &-item {
+      margin-bottom: 10px;
+      font-weight: bold;
+      span {
+        min-width: 140px;
+        display: inline-block;
+        margin-right: 10px;
+        font-weight: normal;
+      }
     }
   }
 }
@@ -160,7 +170,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Roboto", sans-serif;
+        font-family: "Sarabun", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -171,7 +181,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Roboto", sans-serif;
+        font-family: "Sarabun", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
@@ -180,15 +190,15 @@ table.mytable {
         text-align: left;
         padding-left: 16px;
       }
-      td:last-child {
-        text-align: right !important;
-        padding-right: 10px;
-        padding-top: 10px;
-      }
       &:hover {
         background: #fbfbfb;
       }
     }
   }
+}
+.notify {
+  background: #fff;
+  font-size: 32px;
+  padding: 20px 40px;
 }
 </style>

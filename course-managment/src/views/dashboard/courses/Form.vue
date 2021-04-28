@@ -1,9 +1,15 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboard">
-      <div class="title">Novi Kurs</div>
+      <div class="title">Kursevi</div>
       <div class="form-card">
-        <h1>Kreirajte novi kurs</h1>
+        <h1>
+          {{
+            this.$route.params.pkCourseId == null
+              ? "Kreirajte novi kurs"
+              : "Izmenite kurs"
+          }}
+        </h1>
         <div class="form-items">
           <div class="input-group">
             <label for="naziv">Naziv Kursa: </label>

@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CourseManagmentBackend.Models
 {
-    public class Course
+    public class CourseStudent
     {
         [Key]
         public long PkCourseId { get; set; }
-        [Required]
-        public string NazivKursa { get; set; }
-        [JsonIgnore]
-        public List<CourseStudent> CourseStudents { get; set; }
-
+        public Course Course { get; set; }
+        [Key]
+        public long PkStudentID { get; set; }
+        public Student Student { get; set; }
     }
 }

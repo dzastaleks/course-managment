@@ -7,6 +7,10 @@ import Year from "./years/Index";
 import CourseForm from "./courses/Form";
 import StudentForm from "./students/Form";
 import YearForm from "./years/Form";
+import CourseDetails from "./courses/Details";
+import StudentDetails from "./students/Details";
+import AddStudents from "./courses/Add";
+import DeleteStudents from "./courses/Delete";
 
 const router = [
   {
@@ -40,6 +44,21 @@ const router = [
                 name:"CourseEdit",
                 component:CourseForm
             },
+            {
+                path:"details/:pkCourseId",
+                name:"CourseDetails",
+                component:CourseDetails
+            },
+            {
+              path:"add/:pkCourseId",
+              name:"AddStudents",
+              component:AddStudents
+            },
+            {
+              path:"delete/:pkCourseId",
+              name:"DeleteStudents",
+              component:DeleteStudents
+          }
         ]
       },
       {
@@ -61,7 +80,13 @@ const router = [
             path:"edit/:pkStudentID",
             name:"StudentEdit",
             component:StudentForm
-        }]
+        },
+        {
+            path:"details/:pkStudentID",
+            name:"StudentDetails",
+            component:StudentDetails
+        }
+      ]
       },
       {
         path: "year",

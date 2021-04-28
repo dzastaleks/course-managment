@@ -20,6 +20,7 @@ namespace CourseManagmentBackend.Models
         public string BrojIndeksa { get; set; }
         public Year Year { get; set; }
         public Status Status { get; set; }
-        public List<Course> Kursevi { get; set; }
+        public List<CourseStudent> StudentCourses { get; set; }
+
     }
 }

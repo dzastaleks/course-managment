@@ -1,9 +1,15 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboard">
-      <div class="title">Novi Student</div>
+      <div class="title">Studenti</div>
       <div class="form-card">
-        <h1>Dodajte novog studenta</h1>
+        <h1>
+          {{
+            this.$route.params.pkStudentID == null
+              ? "Dodajte novog studenta"
+              : "Izmenite studenta"
+          }}
+        </h1>
         <div class="form-items">
           <div class="input-group">
             <label for="ime">Ime: </label>
@@ -147,6 +153,26 @@ export default {
     this.getStatus();
   },
   watch: {
+    model: function () {
+      let status = this.statusDropdownOptions.find(
+        (obj) => obj.id === this.model.statusId
+      );
+
+      this.statusDropdownDefault = Object.assign(
+        {},
+        this.statusDropdownDefault,
+        status
+      );
+      let godina = this.godinaDropdownOptions.find(
+        (obj) => obj.id === this.model.yearId
+      );
+
+      this.godinaDropdownDefault = Object.assign(
+        {},
+        this.godinaDropdownDefault,
+        godina
+      );
+    },
     statusDropdownOptions: function () {
       let status = this.statusDropdownOptions.find(
         (obj) => obj.id === this.model.statusId

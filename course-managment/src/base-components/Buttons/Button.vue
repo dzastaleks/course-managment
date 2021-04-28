@@ -11,7 +11,7 @@
       v-if="icon != ''"
     >
       <i
-        :class="'icon-' + icon"
+        :class="['icon-' + icon, title == '' ? 'margin-right' : '']"
         class="icons"
         :style="'font-size:' + fontSize + 'px!important;'"
       ></i>
@@ -117,7 +117,20 @@ export default {
   text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
   box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
 }
-
+.secondary {
+  color: #fff;
+  background: #fd7e14;
+  border-color: #fd7e14;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+}
+.danger {
+  color: #fff;
+  background: #eb1c24;
+  border-color: #eb1c24;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+}
 .margin-right {
   margin-right: 0px !important;
 }

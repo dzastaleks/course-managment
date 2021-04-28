@@ -15,12 +15,27 @@
           <tr>
             <th>ID</th>
             <th>Naziv</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(tr, indextr) in years" v-bind:key="indextr">
+          <tr
+            v-for="(tr, indextr) in years"
+            v-bind:key="indextr"
+            @mouseover="showActionButtons(indextr)"
+          >
             <td>{{ tr.yearId }}</td>
             <td class="bold">{{ tr.naziv }}</td>
+            <td>
+              <div class="actions" v-show="buttonsIndex === indextr">
+                <btn
+                  :styleBtn="'secondary'"
+                  :title="''"
+                  :icon="'solid-pen'"
+                  @click="editClick(tr.yearId)"
+                ></btn>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -47,11 +62,21 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    editClick(id) {
+      this.$router.push({
+        name: "YearEdit",
+        params: { yearId: id }
+      });
+    },
+    showActionButtons(id) {
+      this.buttonsIndex = id;
     }
   },
   data() {
     return {
-      years: []
+      years: [],
+      buttonsIndex: 0
     };
   },
   created() {
@@ -78,6 +103,10 @@ export default {
       font-size: 36px;
       text-align: left;
       margin-bottom: 30px;
+      background: #fff;
+      padding: 20px 40px;
+      border-radius: 4px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
   }
 }
@@ -135,6 +164,11 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td:last-child {
+        text-align: right !important;
+        padding-right: 10px;
+        padding-top: 10px;
       }
       &:hover {
         background: #fbfbfb;

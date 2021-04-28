@@ -52,7 +52,9 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            var student =  _context.Students.Include(s => s.Status).Include(s => s.Year).FirstOrDefault(s => s.PkStudentID == id);
+            var student = _context.Students.Include(s => s.Status).Include(s => s.Year).FirstOrDefault(s => s.PkStudentID == id);
+
+
             return Ok(new { student = _mapper.Map<StudentViewModel>(student) });
 
 
@@ -60,10 +62,29 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet("get-details-for-student/{id}")]
         public async Task<IActionResult> GetDetails(long id)
         {
-            var student = _context.Students.FromSqlRaw("spGetStudentById {0}", id).ToList().FirstOrDefault();
-            return Ok(new { student = _mapper.Map<StudentViewModel>(student) });
+            var student = _context.Students.FromSqlRaw<Student>("spGetStudentDetails {0}", id).ToList().FirstOrDefault();
+            if (student != null)
+            {
+                student.Year = _context.Year.FromSqlRaw<Year>("spGetYearForStudent {0}", id).ToList().FirstOrDefault();
+                student.Status = _context.Status.FromSqlRaw<Status>("spGetStatusForStudent {0}", id).ToList().FirstOrDefault();
+            }
+            
+            return Ok(new { student = _mapper.Map<Student>(student) });
         }
-        
+        [HttpGet("get-courses-for-student/{id}")]
+        public async Task<IActionResult> GetCourses(long id)
+        {
+            // var courses = _context.CourseStudent.Include(c => c.Course).Where(s=> s.PkStudentID == id);
+            var courses = _context.Courses.FromSqlRaw<Course>("spGetCoursesForStudent {0}", id).ToList();
+
+
+            List<CourseViewModel> courseView = new List<CourseViewModel>();
+            foreach (var item in courses)
+            {
+                courseView.Add(_mapper.Map<CourseViewModel>(item));
+            }
+            return Ok(new { kursevi = courseView });
+        }
         [HttpPut]   
         public async Task<IActionResult> Update([FromBody] StudentViewModel model)
         {

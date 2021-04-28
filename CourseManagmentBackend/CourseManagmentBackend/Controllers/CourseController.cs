@@ -48,6 +48,79 @@ namespace CourseManagmentBackend.Controllers
             return Ok( new { course = _mapper.Map<CourseViewModel>(course) });
 
         }
+        [HttpGet("get-details-for-course/{id}")]
+        public async Task<IActionResult> GetDetails(long id)
+        {
+            var course = _context.Courses.FromSqlRaw<Course>("spGetCourseDetails {0}", id).ToList().FirstOrDefault();
+            //if (course != null)
+                //course.CourseStudents = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
+          
+            return Ok(new { course = _mapper.Map<Course>(course) });
+
+        }
+        [HttpGet("get-students-for-course/{id}")]
+        public async Task<IActionResult> GetStudents(long id)
+        {
+            var students = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
+            //if (course != null)
+            //course.CourseStudents = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
+
+            List<StudentViewModel> studentView = new List<StudentViewModel>();
+            foreach (var item in students)
+            {
+                studentView.Add(_mapper.Map<StudentViewModel>(item));
+            }
+            return Ok(new { studenti = studentView });
+
+        }
+        [HttpGet("get-students-not-in-course/{id}")]
+        public async Task<IActionResult> GetStudentsNotIn(long id)
+        {
+
+            var studentsInCourse = _context.CourseStudent.Where(cs => cs.PkCourseId == id).Select(cs => cs.PkStudentID);
+
+            var students = _context.Students.Where(s => !studentsInCourse.Contains(s.PkStudentID)).ToList();
+
+
+            return Ok(new { students = _mapper.Map<List<StudentViewModel>>(students) });
+
+        }
+
+        [HttpPost("delete-selected-students-from-course")]
+        public async Task<IActionResult> DeleteSelectedStudents([FromBody] List<DeleteSelectedCourseStudentsViewModel> selected)
+        {
+            foreach (var item in selected)
+            {
+                var student = _context.CourseStudent.FirstOrDefault(c => c.PkCourseId == item.PkCourseId && c.PkStudentID == item.PkStudentID);
+                if (student != null)
+                {
+                    _context.CourseStudent.Remove(student);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return Ok();
+        }
+        [HttpPost("add-selected-students-to-course")]
+        public async Task<IActionResult> AddSelectedStudents([FromBody] List<DeleteSelectedCourseStudentsViewModel> selected)
+        {
+            try
+            {
+                foreach (var item in selected)
+                {
+                    if (!_context.CourseStudent.Any(cs => cs.PkStudentID.Equals(item.PkStudentID) && cs.PkCourseId.Equals(item.PkCourseId)))
+                    {
+
+                        _context.CourseStudent.Add(new CourseStudent() { PkCourseId = item.PkCourseId, PkStudentID = item.PkStudentID });
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CourseViewModel model)
         {

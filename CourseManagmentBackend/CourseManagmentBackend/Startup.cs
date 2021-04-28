@@ -59,8 +59,9 @@ namespace CourseManagmentBackend
                     ValidateAudience = false
                 };
             });
-            
+
             services.AddControllers();
+        
             SetUpCORS(services);
 
         }

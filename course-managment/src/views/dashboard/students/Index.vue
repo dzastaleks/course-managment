@@ -20,10 +20,15 @@
             <th>Status</th>
             <th>Godina</th>
             <th>Broj Kurseva</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(tr, indextr) in students" v-bind:key="indextr">
+          <tr
+            v-for="(tr, indextr) in students"
+            v-bind:key="indextr"
+            @mouseover="showActionButtons(indextr)"
+          >
             <td>{{ tr.pkStudentID }}</td>
             <td>{{ tr.ime }}</td>
             <td>{{ tr.prezime }}</td>
@@ -31,6 +36,23 @@
             <td>{{ tr.statusId }}</td>
             <td>{{ tr.yearId }}</td>
             <td>34</td>
+            <td>
+              <div class="actions" v-show="buttonsIndex === indextr">
+                <btn
+                  :styleBtn="'primary'"
+                  :title="''"
+                  :icon="'solid-eye'"
+                  @click="detailsClick(tr.pkStudentID)"
+                  style="margin-right: 10px"
+                ></btn>
+                <btn
+                  :styleBtn="'secondary'"
+                  :title="''"
+                  :icon="'solid-pen'"
+                  @click="editClick(tr.pkStudentID)"
+                ></btn>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -57,11 +79,27 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    detailsClick(id) {
+      this.$router.push({
+        name: "StudentDetails",
+        params: { pkStudentID: id }
+      });
+    },
+    editClick(id) {
+      this.$router.push({
+        name: "StudentEdit",
+        params: { pkStudentID: id }
+      });
+    },
+    showActionButtons(id) {
+      this.buttonsIndex = id;
     }
   },
   data() {
     return {
-      students: []
+      students: [],
+      buttonsIndex: 0
     };
   },
   created() {
@@ -88,6 +126,10 @@ export default {
       font-size: 36px;
       text-align: left;
       margin-bottom: 30px;
+      background: #fff;
+      padding: 20px 40px;
+      border-radius: 4px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
   }
 }
@@ -145,6 +187,11 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td:last-child {
+        text-align: right !important;
+        padding-right: 10px;
+        padding-top: 10px;
       }
       &:hover {
         background: #fbfbfb;

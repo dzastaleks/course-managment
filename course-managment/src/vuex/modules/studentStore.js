@@ -53,6 +53,30 @@ const student = {
             });
         });
       }, 
+      GET_DETAILS: function ({ state }, id) {
+        return new Promise((resolve, reject) => {
+            globalStore.state.$axios_auth
+                .get("api/student/get-details-for-student/"+ id)
+                .then(function (response) {
+                    resolve(response);
+                })
+                .catch(function (error) {
+                    reject(error.response);
+                });
+        });
+    },
+    GET_COURSES: function ({ state }, id) {
+      return new Promise((resolve, reject) => {
+          globalStore.state.$axios_auth
+              .get("api/student/get-courses-for-student/"+ id)
+              .then(function (response) {
+                  resolve(response);
+              })
+              .catch(function (error) {
+                  reject(error.response);
+              });
+      });
+  },
     },
     mutations: {
     }
