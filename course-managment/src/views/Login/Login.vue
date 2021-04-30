@@ -66,7 +66,7 @@ export default {
     login() {
       var $this = this;
       store
-        .dispatch("login/LOGIN", this.model)
+        .dispatch("LOGIN", this.model)
         .then((response) => {
           store.commit("SET_TOKEN", "Bearer " + response.data.token);
           store.commit("SET_USER", JSON.stringify(response.data));

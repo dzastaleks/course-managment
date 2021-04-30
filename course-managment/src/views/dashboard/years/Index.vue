@@ -7,6 +7,7 @@
           :styleBtn="'primary'"
           :title="'Dodaj godinu'"
           :icon="'solid-plus'"
+          style="margin-bottom: 0px !important"
           @click="redirectToComponent('YearCreate')"
         ></btn>
       </div>
@@ -55,7 +56,7 @@ export default {
     },
     getAll() {
       store
-        .dispatch("year/GET_ALL")
+        .dispatch("GET_ALL_YEAR")
         .then((response) => {
           this.years = response.data.years;
         })
@@ -99,14 +100,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     .title {
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      background: #fff;
-      padding: 20px 40px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
   }
 }

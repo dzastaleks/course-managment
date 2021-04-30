@@ -42,7 +42,7 @@ export default {
     submit() {
       if (this.$route.params.pkCourseId == null) {
         store
-          .dispatch("course/CREATE", this.model)
+          .dispatch("CREATE_COURSE", this.model)
           .then((response) => {
             console.log(response);
           })
@@ -51,7 +51,7 @@ export default {
           });
       } else {
         store
-          .dispatch("course/EDIT", this.model)
+          .dispatch("EDIT_COURSE", this.model)
           .then((response) => {
             console.log(this.model);
             console.log(response);
@@ -63,7 +63,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("course/GET_BY_ID", this.$route.params.pkCourseId)
+        .dispatch("GET_BY_ID_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.model = response.data.course;
         })

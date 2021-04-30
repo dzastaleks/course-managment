@@ -6,7 +6,8 @@
         <btn
           :styleBtn="'primary'"
           :title="'Dodaj novi kurs'"
-          :icon="'solid-plus'"
+          :icon="'regular-plus'"
+          style="margin-bottom: 0px"
           @click="redirectToComponent('CourseCreate')"
         ></btn>
       </div>
@@ -70,7 +71,7 @@ export default {
     },
     getAll() {
       store
-        .dispatch("course/GET_ALL")
+        .dispatch("GET_ALL_COURSE")
         .then((response) => {
           this.courses = response.data.courses;
         })
@@ -114,14 +115,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
     .title {
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      background: #fff;
-      padding: 20px 40px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
   }
 }

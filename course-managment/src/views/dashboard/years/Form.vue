@@ -38,7 +38,7 @@ export default {
     submit() {
       if (this.$route.params.yearId == null) {
         store
-          .dispatch("year/CREATE", this.model)
+          .dispatch("CREATE_YEAR", this.model)
           .then((response) => {
             console.log(response);
           })
@@ -47,7 +47,7 @@ export default {
           });
       } else {
         store
-          .dispatch("year/EDIT", this.model)
+          .dispatch("EDIT_YEAR", this.model)
           .then((response) => {
             console.log(this.model);
             console.log(response);
@@ -59,7 +59,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("year/GET_BY_ID", this.$route.params.yearId)
+        .dispatch("GET_BY_ID_YEAR", this.$route.params.yearId)
         .then((response) => {
           this.model = response.data.year;
           console.log(response.data);

@@ -4,14 +4,16 @@ using CourseManagmentBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseManagmentBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210428191026_SeedStatusTable")]
+    partial class SeedStatusTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,36 +111,6 @@ namespace CourseManagmentBackend.Migrations
                     b.HasIndex("YearId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            PkStudentID = 1L,
-                            BrojIndeksa = "123/15",
-                            Ime = "Marko",
-                            Prezime = "Marković"
-                        },
-                        new
-                        {
-                            PkStudentID = 2L,
-                            BrojIndeksa = "124/15",
-                            Ime = "Petar",
-                            Prezime = "Petrović"
-                        },
-                        new
-                        {
-                            PkStudentID = 4L,
-                            BrojIndeksa = "125/15",
-                            Ime = "Marko",
-                            Prezime = "Petrović"
-                        },
-                        new
-                        {
-                            PkStudentID = 5L,
-                            BrojIndeksa = "126/15",
-                            Ime = "Petar",
-                            Prezime = "Marković"
-                        });
                 });
 
             modelBuilder.Entity("CourseManagmentBackend.Models.User", b =>
@@ -175,28 +147,6 @@ namespace CourseManagmentBackend.Migrations
                     b.HasKey("YearId");
 
                     b.ToTable("Year");
-
-                    b.HasData(
-                        new
-                        {
-                            YearId = 1L,
-                            Naziv = "Prva"
-                        },
-                        new
-                        {
-                            YearId = 2L,
-                            Naziv = "Druga"
-                        },
-                        new
-                        {
-                            YearId = 3L,
-                            Naziv = "Treća"
-                        },
-                        new
-                        {
-                            YearId = 4L,
-                            Naziv = "Četvrta"
-                        });
                 });
 
             modelBuilder.Entity("CourseManagmentBackend.Models.CourseStudent", b =>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseManagmentBackend.Models;
 using CourseManagmentBackend.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CourseManagmentBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -76,7 +78,6 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet("get-students-not-in-course/{id}")]
         public async Task<IActionResult> GetStudentsNotIn(long id)
         {
-
             var studentsInCourse = _context.CourseStudent.Where(cs => cs.PkCourseId == id).Select(cs => cs.PkStudentID);
 
             var students = _context.Students.Where(s => !studentsInCourse.Contains(s.PkStudentID)).ToList();

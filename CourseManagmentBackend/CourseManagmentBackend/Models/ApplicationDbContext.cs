@@ -28,6 +28,8 @@ namespace CourseManagmentBackend.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Seed();
+
             modelBuilder.Entity<CourseStudent>()
            .HasKey(cs => new { cs.PkCourseId, cs.PkStudentID});
 

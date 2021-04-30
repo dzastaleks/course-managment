@@ -6,16 +6,17 @@
           {{ this.model.ime }} {{ this.model.prezime }}
           <span>{{ this.model.brojIndeksa }}</span>
         </div>
-        <!-- <btn
+        <btn
           :styleBtn="'primary'"
-          :title="'Dodaj novi kurs'"
-          :icon="'solid-plus'"
-          @click="redirectToComponent('CourseCreate')"
-        ></btn> -->
+          :title="'Nazad'"
+          :icon="'solid-arrow-left'"
+          style="margin-bottom: 0px !important"
+          @click="redirectToComponent('Student')"
+        ></btn>
       </div>
       <div class="user-details">
         <div class="user-details-item" v-if="this.model.ime">
-          <span>Ime</span> {{ this.model.ime }}
+          <span>Ime</span>{{ this.model.ime }}
         </div>
         <div class="user-details-item" v-if="this.model.prezime">
           <span>Prezime</span>{{ this.model.prezime }}
@@ -44,7 +45,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="notify" v-else>Ovaj student nije registrovan na kurseve!</div>
+      <div class="notify" v-else>Student nije registrovan na kurs!</div>
     </div>
   </div>
 </template>
@@ -67,7 +68,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("student/GET_DETAILS", this.$route.params.pkStudentID)
+        .dispatch("GET_DETAILS_STUDENT", this.$route.params.pkStudentID)
         .then((response) => {
           this.model = response.data.student;
         })
@@ -75,7 +76,7 @@ export default {
     },
     getCourses() {
       store
-        .dispatch("student/GET_COURSES", this.$route.params.pkStudentID)
+        .dispatch("GET_COURSES_STUDENT", this.$route.params.pkStudentID)
         .then((response) => {
           this.kursevi = response.data.kursevi;
         })
@@ -103,14 +104,16 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    padding: 20px 40px;
+
     .title {
-      background: #fff;
-      padding: 20px 40px;
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+
       span {
         font-size: 24px;
         display: block;
@@ -122,7 +125,8 @@ export default {
     padding: 40px;
     margin-bottom: 40px;
     text-align: left;
-    display: table;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+
     &-item {
       margin-bottom: 10px;
       font-weight: bold;
@@ -198,6 +202,7 @@ table.mytable {
 }
 .notify {
   background: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   font-size: 32px;
   padding: 20px 40px;
 }

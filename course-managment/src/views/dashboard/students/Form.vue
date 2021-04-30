@@ -36,20 +36,20 @@
             />
           </div>
           <div class="input-group">
-            <label for="Status">Status:</label>
-            <dropdown
-              :options="statusDropdownOptions"
-              :default="statusDropdownDefault"
-              @input="handleDropdownStatus"
-              :tabindex="1"
-            ></dropdown>
-          </div>
-          <div class="input-group">
             <label for="Godina">Godina:</label>
             <dropdown
               :options="godinaDropdownOptions"
               :default="godinaDropdownDefault"
               @input="handleDropdownYear"
+              :tabindex="1"
+            ></dropdown>
+          </div>
+          <div class="input-group">
+            <label for="Status">Status:</label>
+            <dropdown
+              :options="statusDropdownOptions"
+              :default="statusDropdownDefault"
+              @input="handleDropdownStatus"
               :tabindex="1"
             ></dropdown>
           </div>
@@ -78,7 +78,7 @@ export default {
       console.log(this.model);
       if (this.$route.params.pkStudentID == null) {
         store
-          .dispatch("student/CREATE", this.model)
+          .dispatch("CREATE_STUDENT", this.model)
           .then((response) => {
             console.log(response);
           })
@@ -87,7 +87,7 @@ export default {
           });
       } else {
         store
-          .dispatch("student/EDIT", this.model)
+          .dispatch("EDIT_STUDENT", this.model)
           .then((response) => {
             console.log(response);
           })
@@ -98,7 +98,7 @@ export default {
     },
     getAllYears() {
       store
-        .dispatch("year/GET_ALL")
+        .dispatch("GET_ALL_YEAR")
         .then((response) => {
           this.godinaDropdownOptions = [];
           response.data.years.forEach((element) => {
@@ -114,7 +114,7 @@ export default {
     },
     getStatus() {
       store
-        .dispatch("status/GET_ALL")
+        .dispatch("GET_ALL_STATUS")
         .then((response) => {
           this.statusDropdownOptions = [];
           response.data.status.forEach((element) => {
@@ -130,7 +130,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("student/GET_BY_ID", this.$route.params.pkStudentID)
+        .dispatch("GET_BY_ID_STUDENT", this.$route.params.pkStudentID)
         .then((response) => {
           this.model = response.data.student;
           console.log(this.model);

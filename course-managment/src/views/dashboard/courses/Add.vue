@@ -3,7 +3,13 @@
     <div class="grid-dashboard">
       <div class="header">
         <div class="title">{{ this.model.nazivKursa }}</div>
-        <div class="title">Dodaj studente u kurs</div>
+        <btn
+          :styleBtn="'primary'"
+          :title="'Nazad'"
+          :icon="'solid-arrow-left'"
+          style="margin-bottom: 0px !important"
+          @click="redirectToComponent('CourseDetails')"
+        ></btn>
       </div>
       <div class="bulk" v-if="this.selected.length > 0">
         <btn
@@ -69,7 +75,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("course/GET_DETAILS", this.$route.params.pkCourseId)
+        .dispatch("GET_DETAILS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.model = response.data.course;
           console.log(response.data);
@@ -78,7 +84,7 @@ export default {
     },
     getStudents() {
       store
-        .dispatch("course/GET_STUDENTS_NOT_IN", this.$route.params.pkCourseId)
+        .dispatch("GET_STUDENTS_NOT_IN_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.students = response.data.students;
         })
@@ -96,7 +102,7 @@ export default {
       });
       console.log(list);
       store
-        .dispatch("course/SAVE_STUDENTS", list)
+        .dispatch("SAVE_STUDENTS_COURSE", list)
         .then((response) => {
           $this.selected = [];
           $this.getStudents();
@@ -145,14 +151,15 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    padding: 20px 40px;
     .title {
-      background: #fff;
-      padding: 20px 40px;
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+
       span {
         font-size: 24px;
         display: block;

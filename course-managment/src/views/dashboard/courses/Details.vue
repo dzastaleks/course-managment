@@ -8,6 +8,7 @@
             :styleBtn="'primary'"
             :title="'Dodaj studente u kurs'"
             :icon="'solid-user-plus'"
+            style="margin-bottom:0px;!important;"
             @click="redirectToComponent('AddStudents')"
           ></btn>
         </div>
@@ -20,7 +21,7 @@
           @click="removeStudents()"
         ></btn>
       </div>
-      <table class="mytable">
+      <table class="mytable" v-if="Object.keys(this.studenti).length > 0">
         <thead>
           <tr>
             <th>
@@ -53,6 +54,7 @@
           </tr>
         </tbody>
       </table>
+      <div class="notify" v-else>Nema registrovanih studenata na kurs!</div>
     </div>
   </div>
 </template>
@@ -76,7 +78,7 @@ export default {
     },
     getById() {
       store
-        .dispatch("course/GET_DETAILS", this.$route.params.pkCourseId)
+        .dispatch("GET_DETAILS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.model = response.data.course;
           console.log(response.data);
@@ -85,7 +87,7 @@ export default {
     },
     getStudents() {
       store
-        .dispatch("course/GET_STUDENTS", this.$route.params.pkCourseId)
+        .dispatch("GET_STUDENTS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.studenti = response.data.studenti;
           console.log(response.data);
@@ -104,7 +106,7 @@ export default {
       });
       console.log(list);
       store
-        .dispatch("course/DELETE_STUDENTS", list)
+        .dispatch("DELETE_STUDENTS_COURSE", list)
         .then((response) => {
           $this.selected = [];
           $this.getStudents();
@@ -119,15 +121,15 @@ export default {
   computed: {
     selectAll: {
       get: function () {
-        return this.students
-          ? this.selected.length == this.students.length
+        return this.studenti
+          ? this.selected.length == this.studenti.length
           : false;
       },
       set: function (value) {
         var selected = [];
 
         if (value) {
-          this.students.forEach(function (student) {
+          this.studenti.forEach(function (student) {
             selected.push(student.pkStudentID);
           });
         }
@@ -153,19 +155,15 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &-buttons {
-      :first-child {
-        margin-right: 10px;
-      }
-    }
+    margin-bottom: 30px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    padding: 20px 40px;
     .title {
-      background: #fff;
-      padding: 20px 40px;
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+
       span {
         font-size: 24px;
         display: block;
@@ -236,5 +234,12 @@ table.mytable {
       }
     }
   }
+}
+.notify {
+  background: #fff;
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  font-size: 32px;
+  padding: 20px 40px;
 }
 </style>

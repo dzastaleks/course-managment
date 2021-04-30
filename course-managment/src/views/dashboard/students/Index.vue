@@ -7,6 +7,7 @@
           :styleBtn="'primary'"
           :title="'Dodaj novog studenta'"
           :icon="'solid-plus'"
+          style="margin-bottom: 0px !important"
           @click="redirectToComponent('StudentCreate')"
         ></btn>
       </div>
@@ -33,8 +34,8 @@
             <td>{{ tr.ime }}</td>
             <td>{{ tr.prezime }}</td>
             <td>{{ tr.brojIndeksa }}</td>
-            <td>{{ tr.statusId }}</td>
-            <td>{{ tr.yearId }}</td>
+            <td>{{ tr.status.naziv }}</td>
+            <td>{{ tr.year.naziv }}</td>
             <td>34</td>
             <td>
               <div class="actions" v-show="buttonsIndex === indextr">
@@ -72,9 +73,10 @@ export default {
     },
     getAll() {
       store
-        .dispatch("student/GET_ALL")
+        .dispatch("GET_ALL_STUDENT")
         .then((response) => {
           this.students = response.data.students;
+          console.log(this.students);
         })
         .catch((error) => {
           console.log(error);
@@ -122,14 +124,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     .title {
       font-size: 36px;
       text-align: left;
-      margin-bottom: 30px;
-      background: #fff;
-      padding: 20px 40px;
-      border-radius: 4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
   }
 }

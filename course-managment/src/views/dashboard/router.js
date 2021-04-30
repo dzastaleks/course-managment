@@ -10,7 +10,6 @@ import YearForm from "./years/Form";
 import CourseDetails from "./courses/Details";
 import StudentDetails from "./students/Details";
 import AddStudents from "./courses/Add";
-import DeleteStudents from "./courses/Delete";
 
 const router = [
   {
@@ -53,12 +52,7 @@ const router = [
               path:"add/:pkCourseId",
               name:"AddStudents",
               component:AddStudents
-            },
-            {
-              path:"delete/:pkCourseId",
-              name:"DeleteStudents",
-              component:DeleteStudents
-          }
+            }
         ]
       },
       {
