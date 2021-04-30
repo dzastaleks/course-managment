@@ -46,7 +46,6 @@ namespace CourseManagmentBackend.Models
                       Naziv = "Četvrta"
                   }
             );
-
             modelBuilder.Entity<Student>().HasData(
                 new Student
                 {
@@ -54,6 +53,8 @@ namespace CourseManagmentBackend.Models
                     Ime = "Marko",
                     Prezime = "Marković",
                     BrojIndeksa = "123/15",
+                    YearId = 1,
+                    StatusId = 1
                 },
                 new Student
                 {
@@ -61,7 +62,8 @@ namespace CourseManagmentBackend.Models
                     Ime = "Petar",
                     Prezime = "Petrović",
                     BrojIndeksa = "124/15",
-
+                    YearId = 2,
+                    StatusId = 2
                 },
                  new Student
                  {
@@ -69,6 +71,8 @@ namespace CourseManagmentBackend.Models
                      Ime = "Marko",
                      Prezime = "Petrović",
                      BrojIndeksa = "125/15",
+                     YearId = 1,
+                     StatusId = 1
                  },
                   new Student
                   {
@@ -76,11 +80,11 @@ namespace CourseManagmentBackend.Models
                       Ime = "Petar",
                       Prezime = "Marković",
                       BrojIndeksa = "126/15",
+                      YearId = 1,
+                      StatusId = 1
 
                   }
             );
-
-
         }
     }
 }

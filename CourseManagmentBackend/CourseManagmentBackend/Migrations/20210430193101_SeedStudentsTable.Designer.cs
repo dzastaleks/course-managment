@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagmentBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210428192302_SeedStudentTable")]
-    partial class SeedStudentTable
+    [Migration("20210430193101_SeedStudentsTable")]
+    partial class SeedStudentsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,10 +98,10 @@ namespace CourseManagmentBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("StatusId")
+                    b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("YearId")
+                    b.Property<long>("YearId")
                         .HasColumnType("bigint");
 
                     b.HasKey("PkStudentID");
@@ -118,28 +118,36 @@ namespace CourseManagmentBackend.Migrations
                             PkStudentID = 1L,
                             BrojIndeksa = "123/15",
                             Ime = "Marko",
-                            Prezime = "Marković"
+                            Prezime = "Marković",
+                            StatusId = 1L,
+                            YearId = 1L
                         },
                         new
                         {
                             PkStudentID = 2L,
                             BrojIndeksa = "124/15",
                             Ime = "Petar",
-                            Prezime = "Petrović"
+                            Prezime = "Petrović",
+                            StatusId = 2L,
+                            YearId = 2L
                         },
                         new
                         {
                             PkStudentID = 4L,
                             BrojIndeksa = "125/15",
                             Ime = "Marko",
-                            Prezime = "Petrović"
+                            Prezime = "Petrović",
+                            StatusId = 1L,
+                            YearId = 1L
                         },
                         new
                         {
                             PkStudentID = 5L,
                             BrojIndeksa = "126/15",
                             Ime = "Petar",
-                            Prezime = "Marković"
+                            Prezime = "Marković",
+                            StatusId = 1L,
+                            YearId = 1L
                         });
                 });
 
@@ -224,11 +232,15 @@ namespace CourseManagmentBackend.Migrations
                 {
                     b.HasOne("CourseManagmentBackend.Models.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CourseManagmentBackend.Models.Year", "Year")
                         .WithMany()
-                        .HasForeignKey("YearId");
+                        .HasForeignKey("YearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Status");
 

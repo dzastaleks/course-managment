@@ -18,7 +18,11 @@ namespace CourseManagmentBackend.Models
         public string Prezime { get; set; }
         [Required]
         public string BrojIndeksa { get; set; }
+        public long YearId { get; set; }
+        [ForeignKey("YearId")]
         public Year Year { get; set; }
+        public long StatusId { get; set; }
+        [ForeignKey("StatusId")]
         public Status Status { get; set; }
         public List<CourseStudent> StudentCourses { get; set; }
 

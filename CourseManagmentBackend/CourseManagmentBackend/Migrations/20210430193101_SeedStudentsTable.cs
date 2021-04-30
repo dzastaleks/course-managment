@@ -2,7 +2,7 @@
 
 namespace CourseManagmentBackend.Migrations
 {
-    public partial class SeedStudentTable : Migration
+    public partial class SeedStudentsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,10 +11,10 @@ namespace CourseManagmentBackend.Migrations
                 columns: new[] { "PkStudentID", "BrojIndeksa", "Ime", "Prezime", "StatusId", "YearId" },
                 values: new object[,]
                 {
-                    { 1L, "123/15", "Marko", "Marković", null, null },
-                    { 2L, "124/15", "Petar", "Petrović", null, null },
-                    { 4L, "125/15", "Marko", "Petrović", null, null },
-                    { 5L, "126/15", "Petar", "Marković", null, null }
+                    { 1L, "123/15", "Marko", "Marković", 1L, 1L },
+                    { 2L, "124/15", "Petar", "Petrović", 2L, 2L },
+                    { 4L, "125/15", "Marko", "Petrović", 1L, 1L },
+                    { 5L, "126/15", "Petar", "Marković", 1L, 1L }
                 });
         }
 

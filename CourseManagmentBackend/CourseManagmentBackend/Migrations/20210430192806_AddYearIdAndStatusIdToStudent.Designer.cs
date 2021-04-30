@@ -4,14 +4,16 @@ using CourseManagmentBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseManagmentBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210430192806_AddYearIdAndStatusIdToStudent")]
+    partial class AddYearIdAndStatusIdToStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,44 +111,6 @@ namespace CourseManagmentBackend.Migrations
                     b.HasIndex("YearId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            PkStudentID = 1L,
-                            BrojIndeksa = "123/15",
-                            Ime = "Marko",
-                            Prezime = "Marković",
-                            StatusId = 1L,
-                            YearId = 1L
-                        },
-                        new
-                        {
-                            PkStudentID = 2L,
-                            BrojIndeksa = "124/15",
-                            Ime = "Petar",
-                            Prezime = "Petrović",
-                            StatusId = 2L,
-                            YearId = 2L
-                        },
-                        new
-                        {
-                            PkStudentID = 4L,
-                            BrojIndeksa = "125/15",
-                            Ime = "Marko",
-                            Prezime = "Petrović",
-                            StatusId = 1L,
-                            YearId = 1L
-                        },
-                        new
-                        {
-                            PkStudentID = 5L,
-                            BrojIndeksa = "126/15",
-                            Ime = "Petar",
-                            Prezime = "Marković",
-                            StatusId = 1L,
-                            YearId = 1L
-                        });
                 });
 
             modelBuilder.Entity("CourseManagmentBackend.Models.User", b =>
