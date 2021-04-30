@@ -16,7 +16,7 @@
       <div class="bulk" v-if="this.selected.length > 0">
         <btn
           :styleBtn="'danger'"
-          :title="'Obriši studente iz kursa'"
+          :title="'Ukloni studente iz kursa'"
           :icon="'solid-trash'"
           @click="removeStudents()"
         ></btn>

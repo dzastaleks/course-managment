@@ -1,5 +1,5 @@
 <template>
-  <div class="dashborad-item">
+  <div class="dashborad-item" @click="click()">
     <div class="title">{{ title }}</div>
     <div class="content">
       {{ value }}
@@ -18,6 +18,11 @@ export default {
       type: Number,
       default: 0
     }
+  },
+  methods: {
+    click() {
+      this.$emit("click");
+    }
   }
 };
 </script>
@@ -30,6 +35,7 @@ export default {
   border-radius: 4px;
   padding: 25px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
   .title {
     font-family: "Roboto";
     font-style: normal;

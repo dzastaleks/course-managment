@@ -1,7 +1,16 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboard">
-      <div class="title">Studenti</div>
+      <div class="header">
+        <div class="title">Studenti</div>
+        <btn
+          :styleBtn="'primary'"
+          :title="'Nazad'"
+          :icon="'solid-arrow-left'"
+          style="margin-bottom: 0px !important"
+          @click="redirectToComponent('Student')"
+        ></btn>
+      </div>
       <div class="form-card">
         <h1>
           {{
@@ -68,6 +77,10 @@ import store from "@/store/index";
 export default {
   components: {},
   methods: {
+    redirectToComponent(component) {
+      if (this.$route.name == component) return;
+      this.$router.push({ name: component });
+    },
     handleDropdownStatus(value) {
       this.model.statusId = value;
     },
@@ -209,10 +222,19 @@ export default {
   // grid-column-gap: 30px;
   // grid-row-gap: 50px;
   // grid-template-columns: 1fr 1fr 1fr;
-  .title {
-    font-size: 36px;
-    text-align: left;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    padding: 20px 40px;
+    .title {
+      font-size: 36px;
+      text-align: left;
+    }
   }
   .form-card {
     margin: 0 auto !important;

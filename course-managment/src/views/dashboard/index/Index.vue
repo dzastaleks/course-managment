@@ -1,9 +1,22 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboar">
-      <DashboardItem :title="'Kursevi'" :value="this.coursesCount" />
-      <DashboardItem :title="'Studenti'" :value="this.studentsCount" />
-      <DashboardItem :title="'Godine'" :value="this.yearsCount" />
+      <DashboardItem
+        :title="'Kursevi'"
+        :value="this.coursesCount"
+        @click="redirectToComponent('Course')"
+      />
+
+      <DashboardItem
+        :title="'Studenti'"
+        :value="this.studentsCount"
+        @click="redirectToComponent('Student')"
+      />
+      <DashboardItem
+        :title="'Godine'"
+        :value="this.yearsCount"
+        @click="redirectToComponent('Year')"
+      />
     </div>
   </div>
 </template>
@@ -22,6 +35,10 @@ export default {
     };
   },
   methods: {
+    redirectToComponent(component) {
+      if (this.$route.name == component) return;
+      this.$router.push({ name: component });
+    },
     getAll() {
       store
         .dispatch("GET_DATA_DASH")
