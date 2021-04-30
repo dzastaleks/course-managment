@@ -19,11 +19,12 @@ namespace CourseManagmentBackend.Controllers
     {
         private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
-
-        public UserController(IUserRepository userRepo, IMapper mapper)
+        private readonly ApplicationDbContext _context;
+        public UserController(IUserRepository userRepo, IMapper mapper, ApplicationDbContext context)
         {
             _userRepo = userRepo;
             _mapper = mapper;
+            _context = context;
         }
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -61,6 +62,15 @@ namespace CourseManagmentBackend.Controllers
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
+        }
+        [HttpGet]
+        public IActionResult DashboardData()
+        {
+            var studentsCount = _context.Students.Count();
+            var coursesCount = _context.Courses.Count();
+            var yearsCount = _context.Year.Count();
+            return Ok(new { studentsCount = studentsCount, coursesCount = coursesCount, yearsCount = yearsCount });
+
         }
     }
 }

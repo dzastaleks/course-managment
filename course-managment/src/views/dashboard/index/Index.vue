@@ -1,18 +1,43 @@
 <template>
   <div class="dashboard-container">
     <div class="grid-dashboar">
-      <DashboardItem :title="'Kursevi'" :value="3" />
-      <DashboardItem :title="'Studenti'" :value="3" />
-      <DashboardItem :title="'Godine'" :value="3" />
+      <DashboardItem :title="'Kursevi'" :value="this.coursesCount" />
+      <DashboardItem :title="'Studenti'" :value="this.studentsCount" />
+      <DashboardItem :title="'Godine'" :value="this.yearsCount" />
     </div>
   </div>
 </template>
 
 <script>
+import store from "@/store/index";
+
 import DashboardItem from "@/components/DashboardItem";
 export default {
   components: { DashboardItem },
-  methods: {}
+  data() {
+    return {
+      studentsCount: 0,
+      coursesCount: 0,
+      yearsCount: 0
+    };
+  },
+  methods: {
+    getAll() {
+      store
+        .dispatch("GET_DATA_DASH")
+        .then((response) => {
+          this.coursesCount = response.data.coursesCount;
+          this.studentsCount = response.data.studentsCount;
+          this.yearsCount = response.data.yearsCount;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
+  created() {
+    this.getAll();
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -309,5 +309,17 @@ EDIT_YEAR: function({state},model) {
           });
       });
 }, 
+GET_DATA_DASH: function({state}) {
+  return new Promise((resolve, reject) => {
+      this.state.$axios_auth
+          .get("/api/user/")
+          .then(function(response) {
+          resolve(response);
+          })
+          .catch(function(error) {
+          reject(error.response);
+          });
+      });
+}, 
   },
 });
