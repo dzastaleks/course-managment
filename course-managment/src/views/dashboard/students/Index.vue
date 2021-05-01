@@ -51,6 +51,13 @@
                   :title="''"
                   :icon="'solid-pen'"
                   @click="editClick(tr.pkStudentID)"
+                  style="margin-right: 10px"
+                ></btn>
+                <btn
+                  :styleBtn="'danger'"
+                  :title="''"
+                  :icon="'solid-trash'"
+                  @click="deleteClick(tr.pkStudentID)"
                 ></btn>
               </div>
             </td>
@@ -93,6 +100,17 @@ export default {
         name: "StudentEdit",
         params: { pkStudentID: id }
       });
+    },
+    deleteClick(id) {
+      store
+        .dispatch("DELETE_STUDENT", id)
+        .then((response) => {
+          console.log(response);
+          this.getAll();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     showActionButtons(id) {
       this.buttonsIndex = id;

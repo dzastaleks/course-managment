@@ -34,6 +34,7 @@
                   :title="''"
                   :icon="'solid-pen'"
                   @click="editClick(tr.yearId)"
+                  style="margin-right: 10px"
                 ></btn>
               </div>
             </td>

@@ -2,7 +2,8 @@
   <div class="dashborad-item" @click="click()">
     <div class="title">{{ title }}</div>
     <div class="content">
-      {{ value }}
+      {{ value ? value : "" }}
+      <slot name="content"></slot>
     </div>
   </div>
 </template>

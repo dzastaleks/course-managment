@@ -8,7 +8,7 @@
           :title="'Nazad'"
           :icon="'solid-arrow-left'"
           style="margin-bottom: 0px !important"
-          @click="redirectToComponent('CourseDetails')"
+          @click="redirectToComponent('Course')"
         ></btn>
       </div>
       <div class="bulk" v-if="this.selected.length > 0">

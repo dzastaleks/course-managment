@@ -321,5 +321,29 @@ GET_DATA_DASH: function({state}) {
           });
       });
 }, 
+DELETE_COURSE: function({state},id) {
+  return new Promise((resolve, reject) => {
+    this.state.$axios_auth
+        .delete("/api/course/"+ id)
+        .then(function(response) {
+            resolve(response);
+        })
+        .catch(function(error) {
+            reject(error.response);
+        });
+    });
+}, 
+DELETE_STUDENT: function({state},id) {
+  return new Promise((resolve, reject) => {
+    this.state.$axios_auth
+        .delete("/api/student/"+ id)
+        .then(function(response) {
+            resolve(response);
+        })
+        .catch(function(error) {
+            reject(error.response);
+        });
+    });
+}
   },
 });

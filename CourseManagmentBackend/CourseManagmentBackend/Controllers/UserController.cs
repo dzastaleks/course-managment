@@ -69,7 +69,8 @@ namespace CourseManagmentBackend.Controllers
             var studentsCount = _context.Students.Count();
             var coursesCount = _context.Courses.Count();
             var yearsCount = _context.Year.Count();
-            return Ok(new { studentsCount = studentsCount, coursesCount = coursesCount, yearsCount = yearsCount });
+            var newCourses = _context.Courses.OrderByDescending(c => c.PkCourseId).Take(3).ToList();
+            return Ok(new { studentsCount = studentsCount, coursesCount = coursesCount, yearsCount = yearsCount, newCourses = newCourses });
 
         }
     }
