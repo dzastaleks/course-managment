@@ -8,7 +8,7 @@
           :title="'Nazad'"
           :icon="'solid-arrow-left'"
           style="margin-bottom: 0px !important"
-          @click="redirectToComponent('Year')"
+          @click="goBack()"
         ></btn>
       </div>
       <div class="form-card">
@@ -53,6 +53,9 @@ export default {
     redirectToComponent(component) {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
     submit() {
       if (this.$route.params.yearId == null) {

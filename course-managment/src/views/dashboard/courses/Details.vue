@@ -83,7 +83,9 @@ export default {
           this.model = response.data.course;
           console.log(response.data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     },
     getStudents() {
       store
@@ -92,7 +94,9 @@ export default {
           this.studenti = response.data.studenti;
           console.log(response.data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     },
     removeStudents() {
       var $this = this;
@@ -109,9 +113,12 @@ export default {
         .dispatch("DELETE_STUDENTS_COURSE", list)
         .then((response) => {
           $this.selected = [];
+          this.$toastr.success("Studenti su uklonjeni iz kursa!", "Uspješno");
           $this.getStudents();
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     }
   },
   created() {

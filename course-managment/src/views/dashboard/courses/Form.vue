@@ -8,7 +8,7 @@
           :title="'Nazad'"
           :icon="'solid-arrow-left'"
           style="margin-bottom: 0px !important"
-          @click="redirectToComponent('Course')"
+          @click="goBack()"
         ></btn>
       </div>
       <div class="form-card">
@@ -52,14 +52,22 @@ export default {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
     },
+    goBack() {
+      this.$router.go(-1);
+    },
     submit() {
       if (this.$route.params.pkCourseId == null) {
         store
           .dispatch("CREATE_COURSE", this.model)
           .then((response) => {
+            this.$toastr.success("Kurs je dodat!", "Uspješno");
             console.log(response);
+            this.$router.push({ name: "Course" });
           })
           .catch((error) => {
+            this.message = error.data.message;
+            this.$toastr.error(this.message, "Greška");
+
             console.log(error);
           });
       } else {
@@ -67,9 +75,13 @@ export default {
           .dispatch("EDIT_COURSE", this.model)
           .then((response) => {
             console.log(this.model);
+            this.$toastr.success("Kurs je izmijenjen!", "Uspješno");
+            this.$router.push({ name: "Course" });
             console.log(response);
           })
           .catch((error) => {
+            this.message = error.data.message;
+            this.$toastr.error(this.message, "Greška");
             console.log(error);
           });
       }
@@ -87,7 +99,8 @@ export default {
     return {
       model: {
         nazivKursa: ""
-      }
+      },
+      message: ""
     };
   },
   created() {

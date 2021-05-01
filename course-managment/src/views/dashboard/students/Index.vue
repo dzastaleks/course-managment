@@ -70,6 +70,7 @@
 
 <script>
 import store from "@/store/index";
+import $ from "jquery";
 
 export default {
   components: {},
@@ -102,15 +103,30 @@ export default {
       });
     },
     deleteClick(id) {
-      store
-        .dispatch("DELETE_STUDENT", id)
-        .then((response) => {
-          console.log(response);
-          this.getAll();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      var $this = this;
+      $this.$toastr.info(
+        "<br /><br /><button type='button' id='confirmationRevertYes' class='warn-btn'>Potvrdi</button>",
+        "Da li ste sigurni da želite da obrišete studenta?",
+        {
+          closeButton: false,
+          allowHtml: true,
+          onShown: function (toast) {
+            $("#confirmationRevertYes").click(function () {
+              store
+                .dispatch("DELETE_STUDENT", id)
+                .then((response) => {
+                  console.log(response);
+                  $this.$toastr.success("Student je obrisan!", "Uspješno");
+                  $this.getAll();
+                })
+                .catch((error) => {
+                  $this.$toastr.error(error, "Greška");
+                  console.log(error);
+                });
+            });
+          }
+        }
+      );
     },
     showActionButtons(id) {
       this.buttonsIndex = id;

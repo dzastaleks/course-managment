@@ -3,12 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 
+window.toastr = require('toastr')
 
 
 import baseButton from "@/base-components/Buttons/Button";
 import sidebar from "@/base-components/Sidebar/Sidebar";
 import dropdown from "@/base-components/DropdownList/DropDownList";
+
+
+Vue.use(VueToastr2);
 
 
 

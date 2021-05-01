@@ -65,7 +65,8 @@ export default {
     return {
       model: [],
       students: [],
-      selected: []
+      selected: [],
+      message: ""
     };
   },
   methods: {
@@ -105,9 +106,16 @@ export default {
         .dispatch("SAVE_STUDENTS_COURSE", list)
         .then((response) => {
           $this.selected = [];
+          $this.$toastr.success(
+            "Studenti su uspješno dodati u kurs!",
+            "Uspješno"
+          );
           $this.getStudents();
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.message = error.data.message;
+          $this.$toastr.error(this.message, "Greška");
+        });
     }
   },
   created() {

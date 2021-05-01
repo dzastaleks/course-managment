@@ -62,6 +62,7 @@
 
 <script>
 import store from "@/store/index";
+import $ from "jquery";
 
 export default {
   components: {},
@@ -84,6 +85,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.message = error;
+          this.$toastr.error(this.message, "Greška");
         });
     },
     detailsClick(id) {
@@ -99,15 +102,30 @@ export default {
       });
     },
     deleteClick(id) {
-      store
-        .dispatch("DELETE_COURSE", id)
-        .then((response) => {
-          console.log(response);
-          this.getAll();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      var $this = this;
+      $this.$toastr.info(
+        "<br /><br /><button type='button' id='confirmationRevertYes' class='warn-btn'>Potvrdi</button>",
+        "Da li ste sigurni da želite da obrišete ovaj kurs?",
+        {
+          closeButton: false,
+          allowHtml: true,
+          onShown: function (toast) {
+            $("#confirmationRevertYes").click(function () {
+              store
+                .dispatch("DELETE_COURSE", id)
+                .then((response) => {
+                  console.log(response);
+                  $this.$toastr.success("Kurs je obrisan!", "Uspješno");
+                  $this.getAll();
+                })
+                .catch((error) => {
+                  console.log(error);
+                  $this.$toastr.error(error, "Greška");
+                });
+            });
+          }
+        }
+      );
     },
     showActionButtons(id) {
       this.buttonsIndex = id;

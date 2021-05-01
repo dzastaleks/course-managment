@@ -78,6 +78,8 @@ export default {
         })
         .catch((error) => {
           this.message = error.data.message;
+          this.$toastr.error(this.message, "Greška");
+
           console.log(error);
         })
         .finally(() => {});
