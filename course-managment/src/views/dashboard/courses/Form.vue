@@ -19,24 +19,31 @@
               : "Izmenite kurs"
           }}
         </h1>
-        <div class="form-items">
-          <div class="input-group">
-            <label for="naziv">Naziv Kursa: </label>
-            <input
-              type="text"
-              placeholder="Unesite Naziv novog kursa"
-              v-model="model.nazivKursa"
-            />
-          </div>
+        <form @submit.prevent data-vv-scope="course_form">
+          <div class="form-items">
+            <div class="input-group">
+              <label for="naziv">Naziv Kursa: </label>
+              <input
+                v-validate="'required'"
+                name="naziv"
+                type="text"
+                placeholder="Unesite Naziv novog kursa"
+                :class="
+                  errors.first('course_form.naziv') != null ? 'input-error' : ''
+                "
+                v-model="model.nazivKursa"
+              />
+            </div>
 
-          <div>
-            <btn
-              :styleBtn="'primary'"
-              :title="'Sačuvaj'"
-              @click="submit()"
-            ></btn>
+            <div>
+              <btn
+                :styleBtn="'primary'"
+                :title="'Sačuvaj'"
+                @click="submit()"
+              ></btn>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -56,35 +63,39 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      if (this.$route.params.pkCourseId == null) {
-        store
-          .dispatch("CREATE_COURSE", this.model)
-          .then((response) => {
-            this.$toastr.success("Kurs je dodat!", "Uspješno");
-            console.log(response);
-            this.$router.push({ name: "Course" });
-          })
-          .catch((error) => {
-            this.message = error.data.message;
-            this.$toastr.error(this.message, "Greška");
+      this.$validator.validateAll("course_form").then((valid) => {
+        if (valid) {
+          if (this.$route.params.pkCourseId == null) {
+            store
+              .dispatch("CREATE_COURSE", this.model)
+              .then((response) => {
+                this.$toastr.success("Kurs je dodat!", "Uspješno");
+                console.log(response);
+                this.$router.push({ name: "Course" });
+              })
+              .catch((error) => {
+                this.message = error.data.message;
+                this.$toastr.error(this.message, "Greška");
 
-            console.log(error);
-          });
-      } else {
-        store
-          .dispatch("EDIT_COURSE", this.model)
-          .then((response) => {
-            console.log(this.model);
-            this.$toastr.success("Kurs je izmijenjen!", "Uspješno");
-            this.$router.push({ name: "Course" });
-            console.log(response);
-          })
-          .catch((error) => {
-            this.message = error.data.message;
-            this.$toastr.error(this.message, "Greška");
-            console.log(error);
-          });
-      }
+                console.log(error);
+              });
+          } else {
+            store
+              .dispatch("EDIT_COURSE", this.model)
+              .then((response) => {
+                console.log(this.model);
+                this.$toastr.success("Kurs je izmijenjen!", "Uspješno");
+                this.$router.push({ name: "Course" });
+                console.log(response);
+              })
+              .catch((error) => {
+                this.message = error.data.message;
+                this.$toastr.error(this.message, "Greška");
+                console.log(error);
+              });
+          }
+        }
+      });
     },
     getById() {
       store
