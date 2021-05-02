@@ -92,7 +92,9 @@ export default {
         .then((response) => {
           this.model = response.data.course;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     }
   },
   data() {

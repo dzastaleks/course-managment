@@ -75,6 +75,7 @@ export default {
           console.log(response.data);
         })
         .catch((error) => {
+          this.$toastr.error(error, "Greška");
           console.log(error);
         });
     },

@@ -63,19 +63,25 @@ export default {
           .dispatch("CREATE_YEAR", this.model)
           .then((response) => {
             console.log(response);
+            this.$toastr.success("Godina je dodata!", "Uspješno");
           })
           .catch((error) => {
             console.log(error);
+            this.message = error.data.message;
+            this.$toastr.error(this.message, "Greška");
           });
       } else {
         store
           .dispatch("EDIT_YEAR", this.model)
           .then((response) => {
             console.log(this.model);
+            this.$toastr.success("Godina je izmijenjena!", "Uspješno");
             console.log(response);
           })
           .catch((error) => {
             console.log(error);
+            this.message = error.data.message;
+            this.$toastr.error(this.message, "Greška");
           });
       }
     },
@@ -86,14 +92,17 @@ export default {
           this.model = response.data.year;
           console.log(response.data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     }
   },
   data() {
     return {
       model: {
         naziv: ""
-      }
+      },
+      message: ""
     };
   },
   created() {

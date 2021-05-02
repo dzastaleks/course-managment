@@ -81,7 +81,9 @@ export default {
           this.model = response.data.course;
           console.log(response.data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     },
     getStudents() {
       store
@@ -89,7 +91,9 @@ export default {
         .then((response) => {
           this.students = response.data.students;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     },
     saveStudents() {
       var $this = this;

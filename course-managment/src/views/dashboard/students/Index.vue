@@ -88,6 +88,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$toastr.error(error, "Greška");
         });
     },
     detailsClick(id) {

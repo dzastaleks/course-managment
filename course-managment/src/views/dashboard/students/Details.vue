@@ -72,7 +72,9 @@ export default {
         .then((response) => {
           this.model = response.data.student;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     },
     getCourses() {
       store
@@ -80,7 +82,9 @@ export default {
         .then((response) => {
           this.kursevi = response.data.kursevi;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     }
   },
   created() {

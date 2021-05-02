@@ -97,17 +97,23 @@ export default {
           .dispatch("CREATE_STUDENT", this.model)
           .then((response) => {
             console.log(response);
+            this.$toastr.success("Student je dodat!", "Uspješno");
+            this.$router.push({ name: "Student" });
           })
           .catch((error) => {
+            this.$toastr.success(error, "Greška");
             console.log(error);
           });
       } else {
         store
           .dispatch("EDIT_STUDENT", this.model)
           .then((response) => {
+            this.$toastr.success("Student je izmijenjen!", "Uspješno");
+            this.$router.push({ name: "Student" });
             console.log(response);
           })
           .catch((error) => {
+            this.$toastr.success(error, "Greška");
             console.log(error);
           });
       }
