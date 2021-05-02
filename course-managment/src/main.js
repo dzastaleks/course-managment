@@ -26,6 +26,19 @@ Vue.component("dropdown",dropdown);
 
 Vue.config.productionTip = false;
 
+Validator.extend("dropdown-required", {
+  getMessage:()=>{
+    return "Polje je obavezno!";
+  },
+  validate: (value)=>{
+   if((value!==0)){
+     return true;
+   }else{
+     return false;
+   }
+  }
+});
+
 new Vue({
   router,
   store,

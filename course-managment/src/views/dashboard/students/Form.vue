@@ -19,53 +19,94 @@
               : "Izmenite studenta"
           }}
         </h1>
-        <div class="form-items">
-          <div class="input-group">
-            <label for="ime">Ime: </label>
-            <input
-              type="text"
-              placeholder="Unesite Ime studenta"
-              v-model="model.ime"
-            />
+        <form @submit.prevent data-vv-scope="student_form">
+          <div class="form-items">
+            <div class="input-group">
+              <label for="ime">Ime: </label>
+              <input
+                v-validate="'required'"
+                name="ime"
+                type="text"
+                placeholder="Unesite Ime studenta"
+                v-model="model.ime"
+                :class="
+                  errors.first('student_form.ime') != null ? 'input-error' : ''
+                "
+              />
+            </div>
+            <div class="input-group">
+              <label for="prezime">Prezime: </label>
+              <input
+                v-validate="'required'"
+                name="prezime"
+                type="text"
+                placeholder="Unesite Prezime studenta"
+                v-model="model.prezime"
+                :class="
+                  errors.first('student_form.prezime') != null
+                    ? 'input-error'
+                    : ''
+                "
+              />
+            </div>
+            <div class="input-group">
+              <label for="brojIndeksa">Broj Indeksa: </label>
+              <input
+                v-validate="'required'"
+                name="brojIndeksa"
+                type="text"
+                placeholder="Unesite Broj indeksa studenta"
+                v-model="model.brojIndeksa"
+                :class="
+                  errors.first('student_form.brojIndeksa') != null
+                    ? 'input-error'
+                    : ''
+                "
+              />
+            </div>
+            <div class="input-group">
+              <label for="Godina">Godina:</label>
+              <dropdown
+                v-validate="'dropdown-required'"
+                :options="godinaDropdownOptions"
+                :default="godinaDropdownDefault"
+                @input="handleDropdownYear"
+                :tabindex="1"
+                name="godina"
+                v-model="model.yearId"
+                :errorClass="
+                  errors.first('student_form.godina') != null
+                    ? 'input-error'
+                    : ''
+                "
+              ></dropdown>
+            </div>
+            <div class="input-group">
+              <label for="Status">Status:</label>
+              <dropdown
+                v-validate="'dropdown-required'"
+                :options="statusDropdownOptions"
+                :default="statusDropdownDefault"
+                @input="handleDropdownStatus"
+                :tabindex="2"
+                name="status"
+                v-model="model.statusId"
+                :errorClass="
+                  errors.first('student_form.status') != null
+                    ? 'input-error'
+                    : ''
+                "
+              ></dropdown>
+            </div>
+            <div>
+              <btn
+                :styleBtn="'primary'"
+                :title="'Sačuvaj'"
+                @click="save()"
+              ></btn>
+            </div>
           </div>
-          <div class="input-group">
-            <label for="prezime">Prezime: </label>
-            <input
-              type="text"
-              placeholder="Unesite Prezime studenta"
-              v-model="model.prezime"
-            />
-          </div>
-          <div class="input-group">
-            <label for="brojIndeksa">Broj Indeksa: </label>
-            <input
-              type="text"
-              placeholder="Unesite Broj indeksa studenta"
-              v-model="model.brojIndeksa"
-            />
-          </div>
-          <div class="input-group">
-            <label for="Godina">Godina:</label>
-            <dropdown
-              :options="godinaDropdownOptions"
-              :default="godinaDropdownDefault"
-              @input="handleDropdownYear"
-              :tabindex="1"
-            ></dropdown>
-          </div>
-          <div class="input-group">
-            <label for="Status">Status:</label>
-            <dropdown
-              :options="statusDropdownOptions"
-              :default="statusDropdownDefault"
-              @input="handleDropdownStatus"
-              :tabindex="1"
-            ></dropdown>
-          </div>
-          <div>
-            <btn :styleBtn="'primary'" :title="'Sačuvaj'" @click="save()"></btn>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -91,32 +132,35 @@ export default {
       this.model.yearId = value;
     },
     save() {
-      console.log(this.model);
-      if (this.$route.params.pkStudentID == null) {
-        store
-          .dispatch("CREATE_STUDENT", this.model)
-          .then((response) => {
-            console.log(response);
-            this.$toastr.success("Student je dodat!", "Uspješno");
-            this.$router.push({ name: "Student" });
-          })
-          .catch((error) => {
-            this.$toastr.error(error.data.message, "Greška");
-            console.log(error);
-          });
-      } else {
-        store
-          .dispatch("EDIT_STUDENT", this.model)
-          .then((response) => {
-            this.$toastr.success("Student je izmijenjen!", "Uspješno");
-            this.$router.push({ name: "Student" });
-            console.log(response);
-          })
-          .catch((error) => {
-            this.$toastr.error(error.data.message, "Greška");
-            console.log(error);
-          });
-      }
+      this.$validator.validateAll("student_form").then((valid) => {
+        if (valid) {
+          if (this.$route.params.pkStudentID == null) {
+            store
+              .dispatch("CREATE_STUDENT", this.model)
+              .then((response) => {
+                console.log(response);
+                this.$toastr.success("Student je dodat!", "Uspješno");
+                this.$router.push({ name: "Student" });
+              })
+              .catch((error) => {
+                this.$toastr.error(error.data.message, "Greška");
+                console.log(error);
+              });
+          } else {
+            store
+              .dispatch("EDIT_STUDENT", this.model)
+              .then((response) => {
+                this.$toastr.success("Student je izmijenjen!", "Uspješno");
+                this.$router.push({ name: "Student" });
+                console.log(response);
+              })
+              .catch((error) => {
+                this.$toastr.error(error.data.message, "Greška");
+                console.log(error);
+              });
+          }
+        }
+      });
     },
     getAllYears() {
       store
@@ -162,7 +206,10 @@ export default {
   },
   data() {
     return {
-      model: {},
+      model: {
+        statusId: 0,
+        yearId: 0
+      },
       statusDropdownOptions: [],
       statusDropdownDefault: { id: 0, name: "Izaberi" },
       godinaDropdownOptions: [],

@@ -10,7 +10,7 @@
       />
     </span>
 
-    <div @click="open = !open" class="selected" :class="[errorClass]">
+    <div @click="open = !open" class="selected" :class="errorClass">
       {{ selected.name }}
     </div>
     <div class="items" :class="[{ selectHide: !open }]">
