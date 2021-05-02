@@ -9,28 +9,40 @@
     </div>
     <div class="form-card">
       <h1>Login</h1>
-      <div class="form-items">
-        <div class="input-group">
-          <label for="username">Korisnicko ime: </label>
-          <input
-            type="text"
-            v-model="model.username"
-            placeholder="Unesite Korisnicko ime"
-          />
+      <form @submit.prevent data-vv-scope="login_form">
+        <div class="form-items">
+          <div class="input-group">
+            <label for="username">Korisnicko ime: </label>
+            <input
+              v-validate="'required'"
+              type="text"
+              name="username"
+              v-model="model.username"
+              :class="
+                errors.first('login_form.username') != null ? 'input-error' : ''
+              "
+              placeholder="Unesite Korisnicko ime"
+            />
+          </div>
+          <div class="input-group">
+            <label for="password">Lozinka: </label>
+            <input
+              v-validate="'required'"
+              :type="typePassword"
+              name="lozinka"
+              v-model="model.password"
+              :class="
+                errors.first('login_form.lozinka') != null ? 'input-error' : ''
+              "
+              placeholder="Unesite Lozinku"
+            />
+            <i class="icon-eye eye-icon" v-on:click="showHidePass"></i>
+          </div>
+          <div>
+            <btn :styleBtn="'primary'" :title="'Login'" @click="login()"></btn>
+          </div>
         </div>
-        <div class="input-group">
-          <label for="password">Lozinka: </label>
-          <input
-            :type="typePassword"
-            v-model="model.password"
-            placeholder="Unesite Lozinku"
-          />
-          <i class="icon-eye eye-icon" v-on:click="showHidePass"></i>
-        </div>
-        <div>
-          <btn :styleBtn="'primary'" :title="'Login'" @click="login()"></btn>
-        </div>
-      </div>
+      </form>
     </div>
     <div class="footer">
       <div class="footer-title">
@@ -64,25 +76,30 @@ export default {
       this.typePassword = this.typePassword == "password" ? "text" : "password";
     },
     login() {
-      var $this = this;
-      store
-        .dispatch("LOGIN", this.model)
-        .then((response) => {
-          store.commit("SET_TOKEN", "Bearer " + response.data.token);
-          store.commit("SET_USER", JSON.stringify(response.data));
-          if (localStorage.getItem("user")) {
-            var user = JSON.parse(localStorage.getItem("user"));
-            $this.$router.push({ name: "DashboardIndex" });
-            console.log(response.data);
-          }
-        })
-        .catch((error) => {
-          this.message = error.data.message;
-          this.$toastr.error(this.message, "Greška");
+      this.$validator.validateAll("login_form").then((valid) => {
+        if (valid) {
+          console.log("login");
+          var $this = this;
+          store
+            .dispatch("LOGIN", this.model)
+            .then((response) => {
+              store.commit("SET_TOKEN", "Bearer " + response.data.token);
+              store.commit("SET_USER", JSON.stringify(response.data));
+              if (localStorage.getItem("user")) {
+                var user = JSON.parse(localStorage.getItem("user"));
+                $this.$router.push({ name: "DashboardIndex" });
+                console.log(response.data);
+              }
+            })
+            .catch((error) => {
+              this.message = error.data.message;
+              this.$toastr.error(this.message, "Greška");
 
-          console.log(error);
-        })
-        .finally(() => {});
+              console.log(error);
+            })
+            .finally(() => {});
+        }
+      });
     }
   }
 };

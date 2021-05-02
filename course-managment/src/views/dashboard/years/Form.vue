@@ -19,15 +19,19 @@
               : "Izmenite godinu"
           }}
         </h1>
-        <form @submit.prevent>
+        <form @submit.prevent data-vv-scope="year_form">
           <div class="form-items">
             <div class="input-group">
               <label for="godina">Naziv Godine: </label>
               <input
                 type="text"
                 name="naziv"
+                v-validate="'required'"
                 placeholder="Unesite Naziv nove godine"
                 v-model="model.naziv"
+                :class="
+                  errors.first('year_form.naziv') != null ? 'input-error' : ''
+                "
               />
             </div>
             <div>
@@ -58,32 +62,38 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      if (this.$route.params.yearId == null) {
-        store
-          .dispatch("CREATE_YEAR", this.model)
-          .then((response) => {
-            console.log(response);
-            this.$toastr.success("Godina je dodata!", "Uspješno");
-          })
-          .catch((error) => {
-            console.log(error);
-            this.message = error.data.message;
-            this.$toastr.error(this.message, "Greška");
-          });
-      } else {
-        store
-          .dispatch("EDIT_YEAR", this.model)
-          .then((response) => {
-            console.log(this.model);
-            this.$toastr.success("Godina je izmijenjena!", "Uspješno");
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.message = error.data.message;
-            this.$toastr.error(this.message, "Greška");
-          });
-      }
+      this.$validator.validateAll("year_form").then((valid) => {
+        if (valid) {
+          if (this.$route.params.yearId == null) {
+            store
+              .dispatch("CREATE_YEAR", this.model)
+              .then((response) => {
+                console.log(response);
+                this.$toastr.success("Godina je dodata!", "Uspješno");
+                this.$router.push({ name: "Year" });
+              })
+              .catch((error) => {
+                console.log(error);
+                this.message = error.data.message;
+                this.$toastr.error(this.message, "Greška");
+              });
+          } else {
+            store
+              .dispatch("EDIT_YEAR", this.model)
+              .then((response) => {
+                console.log(this.model);
+                this.$toastr.success("Godina je izmijenjena!", "Uspješno");
+                this.$router.push({ name: "Year" });
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+                this.message = error.data.message;
+                this.$toastr.error(this.message, "Greška");
+              });
+          }
+        }
+      });
     },
     getById() {
       store

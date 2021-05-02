@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "toastr": "^2.1.4",
+    "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vue-toastr-2": "0.0.10",
