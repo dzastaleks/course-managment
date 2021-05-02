@@ -76,6 +76,9 @@ export default {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
     },
+    goBack() {
+      this.$router.go(-1);
+    },
     getById() {
       store
         .dispatch("GET_DETAILS_COURSE", this.$route.params.pkCourseId)
@@ -159,6 +162,7 @@ export default {
   // grid-row-gap: 50px;
   // grid-template-columns: 1fr 1fr 1fr;
   .header {
+    font-family: "Roboto", sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -182,7 +186,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -198,7 +202,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -216,7 +220,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -227,7 +231,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;

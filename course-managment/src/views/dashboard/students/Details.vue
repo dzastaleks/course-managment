@@ -41,7 +41,14 @@
         <tbody>
           <tr v-for="(tr, indextr) in this.kursevi" v-bind:key="indextr">
             <td>{{ tr.pkCourseId }}</td>
-            <td class="bold">{{ tr.nazivKursa }}</td>
+            <td
+              class="bold click"
+              @click="
+                redirectToComponentWithParam('CourseDetails', tr.pkCourseId)
+              "
+            >
+              {{ tr.nazivKursa }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -65,6 +72,15 @@ export default {
     redirectToComponent(component) {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
+    },
+    redirectToComponentWithParam(component, id) {
+      if (this.$route.name == component) return;
+      this.$router.push({
+        name: component,
+        params: {
+          pkCourseId: id
+        }
+      });
     },
     getById() {
       store
@@ -104,6 +120,7 @@ export default {
   // grid-column-gap: 30px;
   // grid-row-gap: 50px;
   // grid-template-columns: 1fr 1fr 1fr;
+  font-family: "Roboto", sans-serif;
   .header {
     display: flex;
     justify-content: space-between;
@@ -113,10 +130,10 @@ export default {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     background: #fff;
     padding: 20px 40px;
-
     .title {
       font-size: 36px;
       text-align: left;
+      font-family: "Roboto", sans-serif;
 
       span {
         font-size: 24px;
@@ -144,7 +161,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -160,7 +177,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -178,7 +195,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -189,7 +206,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
@@ -197,6 +214,15 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td.click {
+        font-family: "Roboto", sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      td.click:hover {
+        text-decoration: underline;
       }
       &:hover {
         background: #fbfbfb;

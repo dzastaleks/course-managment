@@ -8,7 +8,7 @@
           :title="'Nazad'"
           :icon="'solid-arrow-left'"
           style="margin-bottom: 0px !important"
-          @click="redirectToComponent('Course')"
+          @click="goBack()"
         ></btn>
       </div>
       <div class="bulk" v-if="this.selected.length > 0">
@@ -73,6 +73,9 @@ export default {
     redirectToComponent(component) {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
     getById() {
       store
@@ -183,7 +186,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -199,7 +202,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -217,7 +220,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -228,7 +231,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;

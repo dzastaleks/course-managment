@@ -27,8 +27,12 @@
             @mouseover="showActionButtons(indextr)"
           >
             <td>{{ tr.pkCourseId }}</td>
-            <td class="bold">{{ tr.nazivKursa }}</td>
-            <td class="bold">{{ tr.nazivKursa }}</td>
+            <td class="bold click" @click="detailsClick(tr.pkCourseId)">
+              {{ tr.nazivKursa }}
+            </td>
+            <td class="bold">
+              {{ tr.studentsCount }}
+            </td>
             <td>
               <div class="actions" v-show="buttonsIndex === indextr">
                 <btn
@@ -147,6 +151,7 @@ export default {
   // grid-column-gap: 30px;
   // grid-row-gap: 50px;
   // grid-template-columns: 1fr 1fr 1fr;
+  font-family: "Roboto", sans-serif;
   .header {
     display: flex;
     justify-content: space-between;
@@ -156,6 +161,7 @@ export default {
     border-radius: 4px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
+
     .title {
       font-size: 36px;
       text-align: left;
@@ -163,7 +169,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -179,7 +185,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -216,6 +222,15 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td.click {
+        font-family: "Roboto", sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      td.click:hover {
+        text-decoration: underline;
       }
       td:last-child {
         text-align: right !important;

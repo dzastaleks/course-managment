@@ -26,7 +26,9 @@
             @mouseover="showActionButtons(indextr)"
           >
             <td>{{ tr.yearId }}</td>
-            <td class="bold">{{ tr.naziv }}</td>
+            <td class="bold click" @click="editClick(tr.yearId)">
+              {{ tr.naziv }}
+            </td>
             <td>
               <div class="actions" v-show="buttonsIndex === indextr">
                 <btn
@@ -114,7 +116,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -130,7 +132,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -148,7 +150,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -159,7 +161,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
@@ -167,6 +169,15 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td.click {
+        font-family: "Roboto", sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      td.click:hover {
+        text-decoration: underline;
       }
       td:last-child {
         text-align: right !important;

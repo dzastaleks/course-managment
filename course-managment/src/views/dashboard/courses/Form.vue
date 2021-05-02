@@ -63,7 +63,7 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      this.$validator.validateAll("course_form").then((valid) => {
+      this.$validator.validateAll("_form").then((valid) => {
         if (valid) {
           if (this.$route.params.pkCourseId == null) {
             store

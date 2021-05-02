@@ -85,7 +85,7 @@ export default {
   position: relative;
   width: 100%;
   text-align: left;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

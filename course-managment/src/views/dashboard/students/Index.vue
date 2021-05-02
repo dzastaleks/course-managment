@@ -31,12 +31,14 @@
             @mouseover="showActionButtons(indextr)"
           >
             <td>{{ tr.pkStudentID }}</td>
-            <td>{{ tr.ime }}</td>
+            <td class="bold click" @click="detailsClick(tr.pkStudentID)">
+              {{ tr.ime }}
+            </td>
             <td>{{ tr.prezime }}</td>
-            <td>{{ tr.brojIndeksa }}</td>
+            <td class="bold">{{ tr.brojIndeksa }}</td>
             <td>{{ tr.status.naziv }}</td>
             <td>{{ tr.year.naziv }}</td>
-            <td>34</td>
+            <td>{{ tr.coursesCount }}</td>
             <td>
               <div class="actions" v-show="buttonsIndex === indextr">
                 <btn
@@ -171,7 +173,7 @@ export default {
   }
 }
 table.mytable {
-  font-family: "Sarabun";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -187,7 +189,7 @@ table.mytable {
       line-height: 22px;
       border-bottom: 1px solid #f0f0f0;
       th {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -205,7 +207,7 @@ table.mytable {
       font-size: 14px;
       line-height: 22px;
       td {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -216,7 +218,7 @@ table.mytable {
         border-bottom: 1px solid #f0f0f0;
       }
       td.bold {
-        font-family: "Sarabun", sans-serif;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
@@ -224,6 +226,15 @@ table.mytable {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         padding-left: 16px;
+      }
+      td.click {
+        font-family: "Roboto", sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      td.click:hover {
+        text-decoration: underline;
       }
       td:last-child {
         text-align: right !important;

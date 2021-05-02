@@ -39,9 +39,17 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var courses = _context.Courses;
-            return Ok(new { courses = _mapper.Map<List<CourseViewModel>>(courses) });
+            var courses = _context.Courses
+                       .Include(c => c.CourseStudents)
+                       .Select(c => new CourseViewModel()
+                       {
+                           PkCourseId = c.PkCourseId,
+                           NazivKursa = c.NazivKursa,
+                           StudentsCount = c.CourseStudents.Count()
+                       })
+                       .ToList();
 
+            return Ok(new { courses = _mapper.Map<List<CourseViewModel>>(courses) });
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)

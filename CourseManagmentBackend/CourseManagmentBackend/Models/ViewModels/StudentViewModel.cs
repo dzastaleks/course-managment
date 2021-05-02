@@ -19,5 +19,6 @@ namespace CourseManagmentBackend.Models.ViewModels
         //public List<long> StudentCoursesIds{ get; set; }
         //public List<string> StudentCoursesNames{ get; set; }
         public List<CourseStudent> StudentCourses { get; set; }
+        public int CoursesCount { get; set; }
     }
 }

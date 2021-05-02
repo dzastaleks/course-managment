@@ -12,5 +12,6 @@ namespace CourseManagmentBackend.Models.ViewModels
         public string NazivKursa { get; set; }
         [JsonIgnore]
         public List<CourseStudent> CourseStudents { get; set; }
+        public int StudentsCount { get; set; }
     }
 }

@@ -45,7 +45,19 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var students = _context.Students.Include(s => s.Year).Include(s => s.Status);
+            
+            var students = _context.Students.Include(s => s.Year).Include(s => s.Status).Include(s => s.StudentCourses)
+                       .Select(s => new StudentViewModel()
+                       {
+                           PkStudentID = s.PkStudentID,
+                           Ime = s.Ime,
+                           Prezime = s.Prezime,
+                           BrojIndeksa = s.BrojIndeksa,
+                           Year = s.Year,
+                           Status = s.Status,
+                           CoursesCount = s.StudentCourses.Count()
+                       })
+                       .ToList();
             return Ok(new { students = _mapper.Map<List<StudentViewModel>>(students)});
 
         }
