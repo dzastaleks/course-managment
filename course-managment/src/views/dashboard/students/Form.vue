@@ -101,7 +101,7 @@ export default {
             this.$router.push({ name: "Student" });
           })
           .catch((error) => {
-            this.$toastr.success(error, "Greška");
+            this.$toastr.error(error.data.message, "Greška");
             console.log(error);
           });
       } else {
@@ -113,7 +113,7 @@ export default {
             console.log(response);
           })
           .catch((error) => {
-            this.$toastr.success(error, "Greška");
+            this.$toastr.error(error.data.message, "Greška");
             console.log(error);
           });
       }
@@ -166,7 +166,8 @@ export default {
       statusDropdownOptions: [],
       statusDropdownDefault: { id: 0, name: "Izaberi" },
       godinaDropdownOptions: [],
-      godinaDropdownDefault: { id: 0, name: "Izaberi" }
+      godinaDropdownDefault: { id: 0, name: "Izaberi" },
+      message: ""
     };
   },
   created() {
