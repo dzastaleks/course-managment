@@ -37,12 +37,6 @@ export default new Vuex.Store({
         baseURL: $api
       })
     },
-    SHOW_LOADER: function (state) {
-      state.showLoader = true;
-    },
-    HIDE_LOADER: function (state) {
-      state.showLoader = false;
-    },
   },
   actions: {
     CREATE_COURSE: function({state},model) {
@@ -157,18 +151,6 @@ LOGIN: function ({ state }, model) {
   return new Promise((resolve, reject) => {
       this.state.$axios
           .post("api/user/authenticate", model)
-          .then(function (response) {
-              resolve(response);
-          })
-          .catch(function (error) {
-              reject(error.response);
-          });
-  });
-},
-LOGOUT: function ({ state }, model) {
-  return new Promise((resolve, reject) => {
-      this.state.$axios_auth
-          .post("api/user/logout-user", { refreshToken: model })
           .then(function (response) {
               resolve(response);
           })

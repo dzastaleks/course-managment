@@ -5,7 +5,6 @@
 </template>
 <script>
 import store from "./store/index";
-import { mapState } from "vuex";
 export default {
   created() {
     // document.title = this.lang("general.app_title");

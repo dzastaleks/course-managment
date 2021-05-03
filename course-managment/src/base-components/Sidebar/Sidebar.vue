@@ -102,9 +102,7 @@ export default {
       this.$router.push({ name: "Login" });
     }
   },
-  mounted() {
-    console.log(this.$route.name);
-  }
+  mounted() {}
 };
 </script>
 

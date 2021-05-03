@@ -72,11 +72,9 @@ export default {
           this.studentsCount = response.data.studentsCount;
           this.yearsCount = response.data.yearsCount;
           this.newCourses = response.data.newCourses;
-          console.log(response.data);
         })
         .catch((error) => {
           this.$toastr.error(error, "Greška");
-          console.log(error);
         });
     },
     detailsClick(id) {

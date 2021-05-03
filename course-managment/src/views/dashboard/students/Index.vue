@@ -86,10 +86,8 @@ export default {
         .dispatch("GET_ALL_STUDENT")
         .then((response) => {
           this.students = response.data.students;
-          console.log(this.students);
         })
         .catch((error) => {
-          console.log(error);
           this.$toastr.error(error, "Greška");
         });
     },
@@ -118,13 +116,11 @@ export default {
               store
                 .dispatch("DELETE_STUDENT", id)
                 .then((response) => {
-                  console.log(response);
                   $this.$toastr.success("Student je obrisan!", "Uspješno");
                   $this.getAll();
                 })
                 .catch((error) => {
                   $this.$toastr.error(error, "Greška");
-                  console.log(error);
                 });
             });
           }

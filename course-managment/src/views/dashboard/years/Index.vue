@@ -64,7 +64,6 @@ export default {
           this.years = response.data.years;
         })
         .catch((error) => {
-          console.log(error);
           this.$toastr.error(error, "Greška");
         });
     },

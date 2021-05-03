@@ -63,35 +63,29 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      this.$validator.validateAll("_form").then((valid) => {
+      this.$validator.validateAll("course_form").then((valid) => {
         if (valid) {
           if (this.$route.params.pkCourseId == null) {
             store
               .dispatch("CREATE_COURSE", this.model)
               .then((response) => {
                 this.$toastr.success("Kurs je dodat!", "Uspješno");
-                console.log(response);
                 this.$router.push({ name: "Course" });
               })
               .catch((error) => {
                 this.message = error.data.message;
                 this.$toastr.error(this.message, "Greška");
-
-                console.log(error);
               });
           } else {
             store
               .dispatch("EDIT_COURSE", this.model)
               .then((response) => {
-                console.log(this.model);
                 this.$toastr.success("Kurs je izmijenjen!", "Uspješno");
                 this.$router.push({ name: "Course" });
-                console.log(response);
               })
               .catch((error) => {
                 this.message = error.data.message;
                 this.$toastr.error(this.message, "Greška");
-                console.log(error);
               });
           }
         }

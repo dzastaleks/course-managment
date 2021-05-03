@@ -82,7 +82,6 @@ export default {
         .dispatch("GET_DETAILS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.model = response.data.course;
-          console.log(response.data);
         })
         .catch((error) => {
           this.$toastr.error(error, "Greška");
@@ -101,14 +100,12 @@ export default {
     saveStudents() {
       var $this = this;
       var list = [];
-      console.log(this.selected);
       $this.selected.forEach((element) => {
         list.push({
           pkCourseId: Number.parseInt($this.$route.params.pkCourseId, 10),
           pkStudentID: element
         });
       });
-      console.log(list);
       store
         .dispatch("SAVE_STUDENTS_COURSE", list)
         .then((response) => {
@@ -145,7 +142,6 @@ export default {
           });
         }
         this.selected = selected;
-        console.log(this.selected);
       }
     }
   }

@@ -78,7 +78,6 @@ export default {
     login() {
       this.$validator.validateAll("login_form").then((valid) => {
         if (valid) {
-          console.log("login");
           var $this = this;
           store
             .dispatch("LOGIN", this.model)
@@ -88,14 +87,11 @@ export default {
               if (localStorage.getItem("user")) {
                 var user = JSON.parse(localStorage.getItem("user"));
                 $this.$router.push({ name: "DashboardIndex" });
-                console.log(response.data);
               }
             })
             .catch((error) => {
               this.message = error.data.message;
               this.$toastr.error(this.message, "Greška");
-
-              console.log(error);
             })
             .finally(() => {});
         }

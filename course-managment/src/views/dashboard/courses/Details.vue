@@ -76,15 +76,11 @@ export default {
       if (this.$route.name == component) return;
       this.$router.push({ name: component });
     },
-    goBack() {
-      this.$router.go(-1);
-    },
     getById() {
       store
         .dispatch("GET_DETAILS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.model = response.data.course;
-          console.log(response.data);
         })
         .catch((error) => {
           this.$toastr.error(error, "Greška");
@@ -95,7 +91,6 @@ export default {
         .dispatch("GET_STUDENTS_COURSE", this.$route.params.pkCourseId)
         .then((response) => {
           this.studenti = response.data.studenti;
-          console.log(response.data);
         })
         .catch((error) => {
           this.$toastr.error(error, "Greška");
@@ -104,14 +99,12 @@ export default {
     removeStudents() {
       var $this = this;
       var list = [];
-      console.log(this.selected);
       $this.selected.forEach((element) => {
         list.push({
           pkCourseId: Number.parseInt($this.$route.params.pkCourseId, 10),
           pkStudentID: element
         });
       });
-      console.log(list);
       store
         .dispatch("DELETE_STUDENTS_COURSE", list)
         .then((response) => {
@@ -144,7 +137,6 @@ export default {
           });
         }
         this.selected = selected;
-        console.log(this.selected);
       }
     }
   }

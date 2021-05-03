@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import dashboardRouter from "@/views/dashboard/router";
 import loginRouter from "@/views/login/router";
 import store from "../store/index";
+import ErrorPage from "@/views/ErrorPage";
 
 Vue.use(VueRouter);
 
@@ -23,7 +24,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   ...dashboardRouter,
-  ...loginRouter
+  ...loginRouter,
+  {
+    path: "/error/404",
+    name: "ErrorPage",
+    component: ErrorPage
+  }
 ];
 
 const router = new VueRouter({

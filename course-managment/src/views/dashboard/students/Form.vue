@@ -138,13 +138,11 @@ export default {
             store
               .dispatch("CREATE_STUDENT", this.model)
               .then((response) => {
-                console.log(response);
                 this.$toastr.success("Student je dodat!", "Uspješno");
                 this.$router.push({ name: "Student" });
               })
               .catch((error) => {
                 this.$toastr.error(error.data.message, "Greška");
-                console.log(error);
               });
           } else {
             store
@@ -152,11 +150,9 @@ export default {
               .then((response) => {
                 this.$toastr.success("Student je izmijenjen!", "Uspješno");
                 this.$router.push({ name: "Student" });
-                console.log(response);
               })
               .catch((error) => {
                 this.$toastr.error(error.data.message, "Greška");
-                console.log(error);
               });
           }
         }
@@ -175,7 +171,7 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
+          this.$toastr.error(error, "Greška");
         });
     },
     getStatus() {
@@ -191,7 +187,7 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
+          this.$toastr.error(error, "Greška");
         });
     },
     getById() {
@@ -199,9 +195,10 @@ export default {
         .dispatch("GET_BY_ID_STUDENT", this.$route.params.pkStudentID)
         .then((response) => {
           this.model = response.data.student;
-          console.log(this.model);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.$toastr.error(error, "Greška");
+        });
     }
   },
   data() {

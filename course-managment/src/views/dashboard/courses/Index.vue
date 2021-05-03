@@ -88,7 +88,6 @@ export default {
           this.courses = response.data.courses;
         })
         .catch((error) => {
-          console.log(error);
           this.message = error;
           this.$toastr.error(this.message, "Greška");
         });
@@ -118,12 +117,10 @@ export default {
               store
                 .dispatch("DELETE_COURSE", id)
                 .then((response) => {
-                  console.log(response);
                   $this.$toastr.success("Kurs je obrisan!", "Uspješno");
                   $this.getAll();
                 })
                 .catch((error) => {
-                  console.log(error);
                   $this.$toastr.error(error, "Greška");
                 });
             });

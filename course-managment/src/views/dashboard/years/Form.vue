@@ -68,12 +68,10 @@ export default {
             store
               .dispatch("CREATE_YEAR", this.model)
               .then((response) => {
-                console.log(response);
                 this.$toastr.success("Godina je dodata!", "Uspješno");
                 this.$router.push({ name: "Year" });
               })
               .catch((error) => {
-                console.log(error);
                 this.message = error.data.message;
                 this.$toastr.error(this.message, "Greška");
               });
@@ -81,13 +79,10 @@ export default {
             store
               .dispatch("EDIT_YEAR", this.model)
               .then((response) => {
-                console.log(this.model);
                 this.$toastr.success("Godina je izmijenjena!", "Uspješno");
                 this.$router.push({ name: "Year" });
-                console.log(response);
               })
               .catch((error) => {
-                console.log(error);
                 this.message = error.data.message;
                 this.$toastr.error(this.message, "Greška");
               });
@@ -100,7 +95,6 @@ export default {
         .dispatch("GET_BY_ID_YEAR", this.$route.params.yearId)
         .then((response) => {
           this.model = response.data.year;
-          console.log(response.data);
         })
         .catch((error) => {
           this.$toastr.error(error, "Greška");
