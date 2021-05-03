@@ -26,7 +26,7 @@ namespace CourseManagmentBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] StudentViewModel model)
         {
-            if(_context.Students.Any(s=>s.BrojIndeksa == model.BrojIndeksa))
+            if(_context.Students.Any(s => s.BrojIndeksa == model.BrojIndeksa))
                 return BadRequest(new { message = "Student sa ovim brojem indeksa vec postoji" });
 
 
@@ -86,7 +86,6 @@ namespace CourseManagmentBackend.Controllers
         [HttpGet("get-courses-for-student/{id}")]
         public async Task<IActionResult> GetCourses(long id)
         {
-            // var courses = _context.CourseStudent.Include(c => c.Course).Where(s=> s.PkStudentID == id);
             var courses = _context.Courses.FromSqlRaw<Course>("spGetCoursesForStudent {0}", id).ToList();
 
 

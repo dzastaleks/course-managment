@@ -50,15 +50,12 @@ namespace CourseManagmentBackend.Repository
 
         public User Register(User user, string password)
         {
-            // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 
             if (password.Length < 6)
                 throw new Exception("Minimum password length is 6 characters");
 
-            //if (_generalContext.Users.Any(x => x.Username == user.Username))
-            //    throw new AppException("Username \"" + user.Username + "\" is already taken");
 
             if (_context.Users.Any(x => x.Username == user.Username))
                 throw new Exception("Korisnicko Ime \"" + user.Username + "\" je vec iskorisceno");

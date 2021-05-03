@@ -62,8 +62,6 @@ namespace CourseManagmentBackend.Controllers
         public async Task<IActionResult> GetDetails(long id)
         {
             var course = _context.Courses.FromSqlRaw<Course>("spGetCourseDetails {0}", id).ToList().FirstOrDefault();
-            //if (course != null)
-                //course.CourseStudents = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
           
             return Ok(new { course = _mapper.Map<Course>(course) });
 
@@ -72,8 +70,6 @@ namespace CourseManagmentBackend.Controllers
         public async Task<IActionResult> GetStudents(long id)
         {
             var students = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
-            //if (course != null)
-            //course.CourseStudents = _context.Students.FromSqlRaw<Student>("spGetStudentsForCourse {0}", id).ToList();
 
             List<StudentViewModel> studentView = new List<StudentViewModel>();
             foreach (var item in students)
